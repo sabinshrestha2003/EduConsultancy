@@ -1,6 +1,10 @@
 import React from 'react';
 import '../styles/HomePage.css';
 import { Link } from 'react-router-dom';
+import { FaFacebookF } from 'react-icons/fa'; // Facebook icon
+import { FaGoogle } from 'react-icons/fa';   // Google icon
+import { FaInstagram } from 'react-icons/fa'; // Instagram icon
+import FujiImage from '../assets/fuji.jpg'; // Import the Fuji image
 
 const HomePage = () => {
   return (
@@ -98,7 +102,7 @@ const HomePage = () => {
               </Link>
             </div>
             <div className="about-visual" data-aos="fade-left">
-              <div className="visual-element"></div>
+              <img src={FujiImage} alt="Mount Fuji, Japan" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           </div>
         </div>
@@ -112,14 +116,14 @@ const HomePage = () => {
               <h3>Kyushu Edu Consultancy</h3>
               <p>Empowering your journey to Japan with expert solutions.</p>
               <div className="social-links">
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-link">
-                  Twitter
+                <a href="https://www.facebook.com/kyushuedu/" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <FaFacebookF />
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-link">
-                  LinkedIn
+                <a href="mailto:kyusu@gmail.com" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <FaGoogle />
                 </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-link">
-                  Facebook
+                <a href="https://www.instagram.com/kyushuedu/?hl=en" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <FaInstagram />
                 </a>
               </div>
             </div>

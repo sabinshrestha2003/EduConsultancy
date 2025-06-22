@@ -1,7 +1,23 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import HomePage from './pages/HomePage';
+import AboutUs from './pages/AboutUs';
+import Contact from './pages/Contact';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import ExploreClasses from './pages/ExploreClasses';
 import kyushulogo from './assets/kyushulogo.png';
 import './App.css';
+
+function NavLink({ to, children }) {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
+  return (
+    <Link to={to} className={`nav-link ${isActive ? 'active' : ''}`} aria-current={isActive}>
+      {children}
+    </Link>
+  );
+}
 
 function App() {
   return (
@@ -17,11 +33,12 @@ function App() {
             <span className="hamburger"></span>
           </button>
           <nav className="navbar-links">
-            <Link to="/" className="nav-link">Home</Link>
-            <Link to="/about" className="nav-link">About</Link>
-            <Link to="/contact" className="nav-link">Contact</Link>
-            <Link to="/login" className="nav-link">Login</Link>
-            <Link to="/signup" className="nav-link">Signup</Link>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/about">About</NavLink>
+            <NavLink to="/classes">Explore Classes</NavLink>
+            <NavLink to="/contact">Contact</NavLink>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/signup">Signup</NavLink>
           </nav>
         </header>
         <main>
@@ -29,12 +46,13 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/documentation" element={<div>Documentation Page</div>} />
             <Route path="/visa" element={<div>Visa Page</div>} />
-            <Route path="/about" element={<div>About Page</div>} />
-            <Route path="/contact" element={<div>Contact Page</div>} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/classes" element={<ExploreClasses />} />
             <Route path="/privacy" element={<div>Privacy Policy</div>} />
             <Route path="/terms" element={<div>Terms of Service</div>} />
-            <Route path="/signup" element={<div>Signup Page</div>} />
-            <Route path="/login" element={<div>Login Page</div>} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </main>
       </div>

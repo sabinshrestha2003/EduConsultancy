@@ -105,6 +105,12 @@ body {
   transform: translateY(-2px);
 }
 
+.nav-link.active {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  font-weight: 600;
+}
+
 main {
   flex: 1;
   width: 100vw;
@@ -142,6 +148,12 @@ main {
     width: 100%;
     text-align: center;
     background-color: var(--light-gray);
+  }
+
+  .nav-link.active {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    font-weight: 600;
   }
 
   .navbar-toggle.active .hamburger {

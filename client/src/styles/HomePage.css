@@ -1,6 +1,6 @@
 /* Import Colors and Google Fonts */
 @import url("../styles/colors.css");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"); 
 
 /* Reset and Base Styles */
 * {
@@ -67,7 +67,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cdefs%3E%3ClinearGradient id="gradient" x1="0%25" y1="0%25" x2="100%25" y2="0%25"%3E%3Cstop offset="0%25" style="stop-color:%23ADD8E6;"/%3E%3Cstop offset="100%25" style="stop-color:%23FFFFFF;"/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="1440" height="320" fill="url(%23gradient)"/%3E%3Cpath d="M0,280C200,260,400,240,600,220C800,200,1000,180,1200,160C1400,140,1440,120,1440,120L1440,320L0,320Z" fill="%23FFB6C1" fill-opacity="0.5"/%3E%3Cpath d="M200,220C300,200,400,180,500,180C600,180,700,200,800,200C900,200,1000,180,1100,180C1200,180,1300,200,1400,220" fill="none" stroke="%23555555" stroke-width="2" stroke-opacity="0.6"/%3E%3Cpath d="M720,180C680,160,760,160,720,180Z" fill="%23555555" fill-opacity="0.4"/%3E%3Crect x="700" y="160" width="40" height="20" fill="%23555555" fill-opacity="0.4"/%3E%3C/svg%3E') no-repeat center;
+  background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cdefs%3E%3ClinearGradient id="gradient" x1="0%25" y1="0%25" x2="100%25" y2="0%25"%3E%3Cstop offset="0%25" style="stop-color:%23ADD8E6;"/%3E%3Cstop offset="100%25" style="stop-color:%23FFFFFF;"/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width="1440" height="320" fill="url(%23gradient)"/%3E%3Cpath d="M0,280C200,250,400,220,600,190C800,160,1000,130,1200,100C1400,70,1440,40,1440,40L1440,320L0,320Z" fill="%23CD853F" fill-opacity="0.6"/%3E%3Ccircle cx="200" cy="150" r="10" fill="%23FFC1CC" opacity="0.7"%3E%3Canimate attributeName="cy" values="150;140;150" dur="2s" repeatCount="indefinite"/%3E%3C/circle%3E%3Ccircle cx="400" cy="130" r="15" fill="%23FFC1CC" opacity="0.7"%3E%3Canimate attributeName="cy" values="130;120;130" dur="2.5s" repeatCount="indefinite"/%3E%3C/circle%3E%3Ccircle cx="800" cy="110" r="12" fill="%23FFC1CC" opacity="0.7"%3E%3Canimate attributeName="cy" values="110;100;110" dur="2.2s" repeatCount="indefinite"/%3E%3C/circle%3E%3Cpath d="M720,200L700,220L740,220L720,200Z" fill="%23555555" fill-opacity="0.5"/%3E%3Crect x="710" y="180" width="20" height="20" fill="%23555555" fill-opacity="0.5"/%3E%3C/svg%3E') no-repeat center;
   background-size: cover;
   animation: float 6s infinite ease-in-out;
   z-index: 1;
@@ -364,10 +364,8 @@ body {
   animation: fadeInUp 1s ease-out 0.3s both;
 }
 
-.visual-element {
-  height: 100%;
-  background: linear-gradient(45deg, var(--light-gray) 0%, var(--white) 100%);
-  animation: float 5s infinite ease-in-out;
+.about-visual img {
+  border-radius: 10px; /* Match the container's border-radius */
 }
 
 /* Footer */
@@ -424,13 +422,17 @@ body {
   color: var(--white);
   text-decoration: none;
   transition: all 0.3s ease;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .social-link:hover {
   background-color: var(--white);
   color: var(--primary-blue);
   transform: translateY(-2px);
+}
+
+.social-link i {
+  font-size: inherit;
 }
 
 .footer-links {
