@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/HomePage.css'; // Reuse existing styles for consistency
 import { Link } from 'react-router-dom';
 import { FaFacebookF } from 'react-icons/fa'; // Import Facebook icon
@@ -6,6 +6,55 @@ import { FaGoogle } from 'react-icons/fa';   // Import Google icon
 import { FaInstagram } from 'react-icons/fa'; // Import Instagram icon
 
 const Signup = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
+  const [errors, setErrors] = useState({ name: '', email: '', password: '', confirmPassword: '' });
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { name: '', email: '', password: '', confirmPassword: '' };
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+      isValid = false;
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+      isValid = false;
+    }
+    if (!formData.password.trim()) {
+      newErrors.password = 'Password is required';
+      isValid = false;
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+      isValid = false;
+    }
+    if (formData.confirmPassword !== formData.password) {
+      newErrors.confirmPassword = 'Passwords do not match';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      // Placeholder for backend submission
+      alert('Account created successfully! (Backend integration pending)');
+      setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+      setErrors({ name: '', email: '', password: '', confirmPassword: '' });
+    }
+  };
+
   return (
     <div className="homepage">
       {/* Signup Header */}
@@ -28,12 +77,49 @@ const Signup = () => {
           <div className="about-content" style={{ flexDirection: 'column', gap: '3rem', alignItems: 'center' }}>
             <div className="about-text" data-aos="fade-up" style={{ maxWidth: '500px', width: '100%' }}>
               <h2>Create Your Account</h2>
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <input type="text" placeholder="Your Name" style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }} />
-                <input type="email" placeholder="Your Email" style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }} />
-                <input type="password" placeholder="Your Password" style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }} />
-                <input type="password" placeholder="Confirm Password" style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }} />
-                <button type="submit" className="btn btn-primary" style={{ width: 'fit-content', alignSelf: 'center' }}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }}
+                />
+                {errors.name && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.name}</p>}
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }}
+                />
+                {errors.email && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.email}</p>}
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Your Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }}
+                />
+                {errors.password && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.password}</p>}
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }}
+                />
+                {errors.confirmPassword && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.confirmPassword}</p>}
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  style={{ width: 'fit-content', alignSelf: 'center' }}
+                  disabled={Object.values(errors).some(error => error) || !Object.values(formData).every(value => value.trim())}
+                >
                   Sign Up
                 </button>
               </form>

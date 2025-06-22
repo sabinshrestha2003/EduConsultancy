@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/HomePage.css'; // Reuse existing styles for consistency
 import { Link } from 'react-router-dom';
 import { FaFacebookF } from 'react-icons/fa'; // Import Facebook icon
@@ -6,6 +6,48 @@ import { FaGoogle } from 'react-icons/fa';   // Import Google icon
 import { FaInstagram } from 'react-icons/fa'; // Import Instagram icon
 
 const Contact = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState({ name: '', email: '', message: '' });
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { name: '', email: '', message: '' };
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+      isValid = false;
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+      isValid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+      isValid = false;
+    }
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      // Placeholder for backend submission
+      alert('Form submitted successfully! (Backend integration pending)');
+      setFormData({ name: '', email: '', message: '' });
+      setErrors({ name: '', email: '', message: '' });
+    }
+  };
+
   return (
     <div className="homepage">
       {/* Contact Header */}
@@ -28,11 +70,40 @@ const Contact = () => {
           <div className="about-content" style={{ flexDirection: 'column', gap: '3rem' }}>
             <div className="about-text" data-aos="fade-up">
               <h2>Contact Form</h2>
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '500px' }}>
-                <input type="text" placeholder="Your Name" style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }} />
-                <input type="email" placeholder="Your Email" style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }} />
-                <textarea placeholder="Your Message" rows="5" style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }}></textarea>
-                <button type="submit" className="btn btn-primary" style={{ width: 'fit-content', alignSelf: 'flex-start' }}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '500px' }}>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }}
+                />
+                {errors.name && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.name}</p>}
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }}
+                />
+                {errors.email && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.email}</p>}
+                <textarea
+                  name="message"
+                  placeholder="Your Message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows="5"
+                  style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }}
+                />
+                {errors.message && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.message}</p>}
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  style={{ width: 'fit-content', alignSelf: 'flex-start' }}
+                  disabled={Object.values(errors).some(error => error) || !Object.values(formData).every(value => value.trim())}
+                >
                   Send Message
                 </button>
               </form>
