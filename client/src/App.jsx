@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import HomePage from './pages/HomePage';
 import AboutUs from './pages/AboutUs';
 import Contact from './pages/Contact';
@@ -11,6 +11,7 @@ import Testimonials from './pages/Testimonials';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
 import AdminLogin from './pages/AdminLogin';
+import Dashboard from './pages/Dashboard';
 import kyushulogo from './assets/kyushulogo.png';
 import './App.css';
 
@@ -57,8 +58,22 @@ function Dropdown({ closeMenu }) {
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('adminToken'));
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    // Update authentication status when token changes
+    const checkAuth = () => setIsAuthenticated(!!localStorage.getItem('adminToken'));
+    window.addEventListener('storage', checkAuth);
+    return () => window.removeEventListener('storage', checkAuth);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    setIsAuthenticated(false);
+    closeMenu();
+  };
 
   return (
     <Router>
@@ -77,6 +92,9 @@ function App() {
               <NavLink to="/classes" onClick={closeMenu}>Explore Classes</NavLink>
               <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
               <Dropdown closeMenu={closeMenu} />
+              {isAuthenticated && (
+                <NavLink to="/dashboard" onClick={closeMenu}>Dashboard</NavLink>
+              )}
             </nav>
 
             <div className="navbar-contact">
@@ -88,6 +106,17 @@ function App() {
                 <span className="contact-icon">📧</span>
                 <span className="contact-text">info@kyushuedu.com</span>
               </a>
+              {isAuthenticated ? (
+                <button
+                  onClick={handleLogout}
+                  className="logout-button"
+                  style={{ padding: '0.5rem 1rem', backgroundColor: '#ff4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                >
+                  Logout
+                </button>
+              ) : (
+                <NavLink to="/admin-login" onClick={closeMenu}>Admin Login</NavLink>
+              )}
             </div>
           </div>
 
@@ -113,6 +142,7 @@ function App() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsAndConditions />} />
             <Route path="/admin-login" element={<AdminLogin />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </main>
       </div>
