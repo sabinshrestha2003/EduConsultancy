@@ -1,11 +1,36 @@
-import React from 'react';
-import '../styles/HomePage.css'; // Reuse existing styles for consistency
-import { Link } from 'react-router-dom';
-import { FaFacebookF } from 'react-icons/fa'; // Import Facebook icon
-import { FaGoogle } from 'react-icons/fa';   // Import Google icon
-import { FaInstagram } from 'react-icons/fa'; // Import Instagram icon
+import React, { useState } from 'react';
+import '../styles/HomePage.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa';
 
 const AdminLogin = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [token, setToken] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await response.json();
+      setMessage(data.message);
+      if (data.token) {
+        setToken(data.token);
+        localStorage.setItem('adminToken', data.token);
+        console.log('Token stored:', data.token);
+        navigate('/dashboard'); // Redirect to dashboard on success
+      }
+    } catch (error) {
+      setMessage('Server error');
+    }
+  };
+
   return (
     <div className="homepage">
       {/* Admin Login Header */}
@@ -28,13 +53,15 @@ const AdminLogin = () => {
           <div className="about-content" style={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}>
             <div className="about-text" data-aos="fade-up">
               <h2>Login</h2>
-              <form style={{ width: '100%', maxWidth: '400px' }}>
+              <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '400px' }}>
                 <div style={{ marginBottom: '1rem' }}>
                   <label htmlFor="username" style={{ display: 'block', marginBottom: '0.5rem' }}>Username</label>
                   <input
                     type="text"
                     id="username"
                     name="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     style={{ width: '100%', padding: '0.5rem', border: '1px solid var(--gray)', borderRadius: '4px' }}
                     placeholder="Enter username"
                   />
@@ -45,6 +72,8 @@ const AdminLogin = () => {
                     type="password"
                     id="password"
                     name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     style={{ width: '100%', padding: '0.5rem', border: '1px solid var(--gray)', borderRadius: '4px' }}
                     placeholder="Enter password"
                   />
@@ -56,6 +85,8 @@ const AdminLogin = () => {
                   Login
                 </button>
               </form>
+              {message && <p style={{ marginTop: '1rem', color: message.includes('Invalid') ? 'red' : 'green' }}>{message}</p>}
+              {token && <p>Token: {token.substring(0, 20)}...</p>}
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="200">
               <p>
