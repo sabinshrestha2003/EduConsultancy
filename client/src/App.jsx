@@ -38,9 +38,12 @@ function Dropdown({ closeMenu }) {
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      <span className="nav-link dropdown-toggle" onClick={(e) => e.preventDefault()}>
-        Others
-      </span>
+      <button className="dropdown-toggle" onClick={(e) => {
+        e.preventDefault();
+        setIsOpen(!isOpen);
+      }}>
+        Others <span className="dropdown-arrow">▾</span>
+      </button>
       <div className={`dropdown-menu ${isOpen ? 'active' : ''}`}>
         <NavLink to="/documentation" onClick={closeMenu}>Documentation</NavLink>
         <NavLink to="/visa" onClick={closeMenu}>Visa Assistance</NavLink>
@@ -65,17 +68,28 @@ function App() {
               <img src={kyushulogo} alt="Kyushu Educational Consultancy Logo" />
             </Link>
           </div>
-          <nav className="navbar-links">
-            <NavLink to="/" onClick={closeMenu}>Home</NavLink>
-            <NavLink to="/about" onClick={closeMenu}>About</NavLink>
-            <NavLink to="/classes" onClick={closeMenu}>Explore Classes</NavLink>
-            <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
-            <Dropdown closeMenu={closeMenu} />
-          </nav>
-          <div className="navbar-contact-right">
-            <a href="tel:+15551234567" className="contact-link">📞 +1-555-123-4567</a>
-            <a href="mailto:info@kyushuedu.com" className="contact-link">📧 info@kyushuedu.com</a>
+          
+          <div className="navbar-right-content">
+            <nav className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
+              <NavLink to="/" onClick={closeMenu}>Home</NavLink>
+              <NavLink to="/about" onClick={closeMenu}>About</NavLink>
+              <NavLink to="/classes" onClick={closeMenu}>Explore Classes</NavLink>
+              <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
+              <Dropdown closeMenu={closeMenu} />
+            </nav>
+
+            <div className="navbar-contact">
+              <a href="tel:+15551234567" className="contact-link">
+                <span className="contact-icon">📞</span>
+                <span className="contact-text">+1-555-123-4567</span>
+              </a>
+              <a href="mailto:info@kyushuedu.com" className="contact-link">
+                <span className="contact-icon">📧</span>
+                <span className="contact-text">info@kyushuedu.com</span>
+              </a>
+            </div>
           </div>
+
           <button
             className={`navbar-toggle ${isMenuOpen ? 'active' : ''}`}
             aria-label="Toggle menu"
@@ -84,6 +98,7 @@ function App() {
             <span className="hamburger"></span>
           </button>
         </header>
+        
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />
