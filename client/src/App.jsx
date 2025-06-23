@@ -10,6 +10,7 @@ import Location from './pages/Location';
 import Testimonials from './pages/Testimonials';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
+import AdminLogin from './pages/AdminLogin';
 import kyushulogo from './assets/kyushulogo.png';
 import './App.css';
 
@@ -111,6 +112,7 @@ function App() {
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsAndConditions />} />
+            <Route path="/admin-login" element={<AdminLogin />} />
           </Routes>
         </main>
       </div>
