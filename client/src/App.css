@@ -29,7 +29,7 @@ body {
   justify-content: space-between;
   align-items: center;
   background-color: var(--white);
-  padding: 1rem 2rem;
+  padding: 1rem 1rem; /* Reduced padding to bring elements closer */
   box-shadow: 0 2px 6px rgba(30, 58, 138, 0.1);
   position: fixed;
   top: 0;
@@ -52,16 +52,18 @@ body {
 
 .navbar-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem; /* Reduced gap for tighter layout */
   align-items: center;
   transition: all 0.3s ease;
+  margin: 0 auto; /* Center the navigation links */
+  max-width: 60%; /* Limit width to prevent stretching */
 }
 
 .nav-link {
   text-decoration: none;
   color: var(--dark-gray);
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 20px;
   transition: all 0.3s ease;
 }
@@ -82,7 +84,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-left: 2rem;
+  gap: 0.3rem; /* Reduced gap for tighter stacking */
+  padding-left: 1rem; /* Add padding to bring closer to navbar content */
 }
 
 .contact-link {
@@ -97,7 +100,7 @@ body {
 }
 
 .navbar-dropdown {
-  margin-left: 2rem;
+  margin-left: 1rem;
 }
 
 .dropdown {
@@ -112,7 +115,7 @@ body {
   font-size: 1rem;
   font-weight: 500;
   color: var(--dark-gray);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 20px;
   transition: all 0.3s ease;
 }
@@ -127,13 +130,15 @@ body {
   display: none;
   position: absolute;
   top: 100%;
-  right: 0;
-  background-color: var(--white);
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(to right, var(--primary-blue), var(--light-blue)); /* Solid gradient */
   box-shadow: 0 4px 6px rgba(30, 58, 138, 0.1);
   border-radius: 10px;
   padding: 0.5rem;
-  min-width: 180px;
-  z-index: 1000;
+  min-width: 200px;
+  z-index: 1001; /* Increased z-index to ensure it stays above other content */
+  background-color: transparent; /* Ensure no conflicting background */
 }
 
 .dropdown-menu.active {
@@ -146,6 +151,11 @@ body {
   width: 100%;
   text-align: left;
   padding: 0.5rem 1rem;
+  color: var(--white);
+}
+
+.dropdown-menu .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .navbar-toggle {
@@ -239,6 +249,8 @@ main {
     box-shadow: none;
     background-color: var(--light-gray);
     border-radius: 10px;
+    transform: none;
+    color: var(--dark-gray);
   }
 
   .dropdown-menu.active {
