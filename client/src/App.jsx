@@ -64,7 +64,15 @@ function App() {
 
   useEffect(() => {
     // Update authentication status when token changes
-    const checkAuth = () => setIsAuthenticated(!!localStorage.getItem('adminToken'));
+    const checkAuth = () => {
+      const token = localStorage.getItem('adminToken');
+      setIsAuthenticated(!!token);
+      if (!token) {
+        // Optional: Redirect to login if no token on initial load
+        window.location.href = '/admin-login';
+      }
+    };
+    checkAuth(); // Initial check
     window.addEventListener('storage', checkAuth);
     return () => window.removeEventListener('storage', checkAuth);
   }, []);
@@ -73,6 +81,7 @@ function App() {
     localStorage.removeItem('adminToken');
     setIsAuthenticated(false);
     closeMenu();
+    window.location.href = '/admin-login'; // Redirect after logout
   };
 
   return (
@@ -106,16 +115,14 @@ function App() {
                 <span className="contact-icon">📧</span>
                 <span className="contact-text">info@kyushuedu.com</span>
               </a>
-              {isAuthenticated ? (
+              {isAuthenticated && (
                 <button
                   onClick={handleLogout}
                   className="logout-button"
-                  style={{ padding: '0.5rem 1rem', backgroundColor: '#ff4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                  style={{ padding: '0.5rem 1rem', backgroundColor: '#ff4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '1rem' }}
                 >
                   Logout
                 </button>
-              ) : (
-                <NavLink to="/admin-login" onClick={closeMenu}>Admin Login</NavLink>
               )}
             </div>
           </div>

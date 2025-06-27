@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import '../styles/HomePage.css'; // Reuse existing styles for consistency
+import '../styles/HomePage.css';
 import { Link } from 'react-router-dom';
-import { FaFacebookF } from 'react-icons/fa'; // Import Facebook icon
-import { FaGoogle } from 'react-icons/fa';   // Import Google icon
-import { FaInstagram } from 'react-icons/fa'; // Import Instagram icon
+import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({ name: '', email: '', message: '' });
+  const [submitMessage, setSubmitMessage] = useState('');
 
   const validateForm = () => {
     let isValid = true;
@@ -38,13 +37,22 @@ const Contact = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Placeholder for backend submission
-      alert('Form submitted successfully! (Backend integration pending)');
-      setFormData({ name: '', email: '', message: '' });
-      setErrors({ name: '', email: '', message: '' });
+      try {
+        const response = await fetch('http://localhost:5000/api/admin/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+        const data = await response.json();
+        setSubmitMessage(data.message || 'Form submitted successfully!');
+        setFormData({ name: '', email: '', message: '' });
+        setErrors({ name: '', email: '', message: '' });
+      } catch (error) {
+        setSubmitMessage('Error submitting form. Please try again.');
+      }
     }
   };
 
@@ -106,6 +114,7 @@ const Contact = () => {
                 >
                   Send Message
                 </button>
+                {submitMessage && <p style={{ marginTop: '1rem', color: submitMessage.includes('Error') ? 'red' : 'green' }}>{submitMessage}</p>}
               </form>
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="200">
