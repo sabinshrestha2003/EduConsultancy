@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/HomePage.css';
 import { Link } from 'react-router-dom';
 import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa';
@@ -7,6 +7,20 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({ name: '', email: '', message: '' });
   const [submitMessage, setSubmitMessage] = useState('');
+
+  useEffect(() => {
+    const trackVisit = async () => {
+      try {
+        await fetch('http://localhost:5000/api/admin/track-visit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } catch (error) {
+        console.error('Visit tracking failed:', error);
+      }
+    };
+    trackVisit();
+  }, []);
 
   const validateForm = () => {
     let isValid = true;

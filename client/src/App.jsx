@@ -63,16 +63,28 @@ function App() {
   const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
+    // Track visit on page load
+    const trackVisit = async () => {
+      try {
+        await fetch('http://localhost:5000/api/admin/track-visit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } catch (error) {
+        console.error('Visit tracking failed:', error);
+      }
+    };
+    trackVisit();
+
     // Update authentication status when token changes
     const checkAuth = () => {
       const token = localStorage.getItem('adminToken');
       setIsAuthenticated(!!token);
       if (!token) {
-        // Optional: Redirect to login if no token on initial load
         window.location.href = '/admin-login';
       }
     };
-    checkAuth(); // Initial check
+    checkAuth();
     window.addEventListener('storage', checkAuth);
     return () => window.removeEventListener('storage', checkAuth);
   }, []);
@@ -81,7 +93,7 @@ function App() {
     localStorage.removeItem('adminToken');
     setIsAuthenticated(false);
     closeMenu();
-    window.location.href = '/admin-login'; // Redirect after logout
+    window.location.href = '/admin-login';
   };
 
   return (

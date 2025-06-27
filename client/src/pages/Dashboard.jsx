@@ -5,6 +5,7 @@ const Dashboard = () => {
   const [message, setMessage] = useState('');
   const [data, setData] = useState(null);
   const [submissions, setSubmissions] = useState([]);
+  const [visitCount, setVisitCount] = useState(0);
   const navigate = useNavigate();
   const token = localStorage.getItem('adminToken');
 
@@ -29,6 +30,7 @@ const Dashboard = () => {
           setMessage(result.message);
           setData(result.data || {});
           setSubmissions(result.submissions || []);
+          setVisitCount(result.visitCount || 0);
         }
       } catch (error) {
         setMessage('Error accessing dashboard');
@@ -39,50 +41,48 @@ const Dashboard = () => {
   }, [token, navigate]);
 
   return (
-    <div style={{ padding: '2rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
-      <h1>Admin Dashboard</h1>
-      <p>{message}</p>
-      {data && (
-        <div style={{ marginTop: '2rem' }}>
-          <h2>Statistics</h2>
-          <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '1rem' }}>
-            <div>
-              <p>Total Users: {data.totalUsers || 0}</p>
-              <p>Active: {data.activeUsers || 0}</p>
-              <p>Inactive: {data.inactiveUsers || 0}</p>
+    <div className="homepage" style={{ padding: '2rem 0', background: 'var(--white)' }}>
+      <div className="container">
+        <h1 className="section-title" style={{ color: 'var(--primary-blue)', marginBottom: '2rem' }}>Admin Dashboard</h1>
+        <p style={{ color: 'var(--dark-gray)', marginBottom: '2rem' }}>{message}</p>
+        {data && (
+          <div className="services-grid" style={{ marginBottom: '2rem' }}>
+            <div className="service-card" style={{ textAlign: 'left' }}>
+              <h3 style={{ color: 'var(--primary-blue)', marginBottom: '1rem' }}>Statistics</h3>
+              <div style={{ display: 'flex', gap: '1.5rem' }}>
+                <div className="stat">
+                  <p className="stat-number">{visitCount}</p>
+                  <p className="stat-label">Website Visits</p>
+                </div>
+              </div>
             </div>
           </div>
-          <h2>Recent Activities</h2>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {(data.recentActivities || []).map(activity => (
-              <li key={activity.id} style={{ margin: '0.5rem 0', textAlign: 'left' }}>
-                {activity.action} - {new Date(activity.timestamp).toLocaleString()}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {submissions.length > 0 && (
-        <div style={{ marginTop: '2rem' }}>
-          <h2>Recent Contact Submissions</h2>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {submissions.map((submission, index) => (
-              <li key={index} style={{ margin: '0.5rem 0', textAlign: 'left', border: '1px solid #ccc', padding: '0.5rem', borderRadius: '4px' }}>
-                <p><strong>Name:</strong> {submission.name}</p>
-                <p><strong>Email:</strong> {submission.email}</p>
-                <p><strong>Message:</strong> {submission.message}</p>
-                <p><strong>Submitted:</strong> {new Date(submission.submittedAt).toLocaleString()}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <button
-        onClick={() => { localStorage.removeItem('adminToken'); navigate('/admin-login'); }}
-        style={{ marginTop: '1rem', padding: '0.5rem 1rem', backgroundColor: '#ff4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-      >
-        Logout
-      </button>
+        )}
+        {submissions.length > 0 && (
+          <div className="services-grid">
+            <div className="service-card" style={{ textAlign: 'left' }}>
+              <h3 style={{ color: 'var(--primary-blue)', marginBottom: '1rem' }}>Recent Contact Submissions</h3>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                {submissions.map((submission, index) => (
+                  <li key={index} style={{ margin: '1rem 0', padding: '1rem', background: 'var(--white)', borderRadius: '8px', boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05)' }}>
+                    <p><strong>Name:</strong> {submission.name}</p>
+                    <p><strong>Email:</strong> {submission.email}</p>
+                    <p><strong>Message:</strong> {submission.message}</p>
+                    <p><strong>Submitted:</strong> {new Date(submission.submittedAt).toLocaleString()}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+        <button
+          className="btn btn-primary"
+          style={{ marginTop: '2rem' }}
+          onClick={() => { localStorage.removeItem('adminToken'); navigate('/admin-login'); }}
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 };
