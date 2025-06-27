@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Admin = require('../models/Admin');
 const ContactSubmission = require('../models/ContactSubmission');
+const Visit = require('../models/Visit');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -45,10 +46,24 @@ router.post('/contact', async (req, res) => {
   }
 });
 
+router.post('/track-visit', async (req, res) => {
+  try {
+    let visit = await Visit.findOne();
+    if (!visit) {
+      visit = new Visit();
+    }
+    visit.count += 1;
+    visit.lastUpdated = Date.now();
+    await visit.save();
+    res.status(200).json({ message: 'Visit tracked', count: visit.count });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+});
+
 router.get('/dashboard', authenticateToken, async (req, res) => {
   try {
     const adminData = {
-      totalUsers: 150,
       activeUsers: 120,
       inactiveUsers: 30,
       recentActivities: [
@@ -56,8 +71,9 @@ router.get('/dashboard', authenticateToken, async (req, res) => {
         { id: 2, action: 'Login attempt', timestamp: new Date(Date.now() - 3600000).toISOString() },
       ],
     };
-    const submissions = await ContactSubmission.find().sort({ submittedAt: -1 }).limit(5); // Last 5 submissions
-    res.status(200).json({ message: 'Welcome to the Admin Dashboard', user: req.user, data: adminData, submissions });
+    const visit = await Visit.findOne() || { count: 0 };
+    const submissions = await ContactSubmission.find().sort({ submittedAt: -1 }).limit(5);
+    res.status(200).json({ message: 'Welcome to the Admin Dashboard', user: req.user, data: adminData, submissions, visitCount: visit.count });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
