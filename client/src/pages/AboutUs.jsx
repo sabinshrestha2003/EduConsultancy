@@ -1,9 +1,9 @@
 import React from 'react';
-import '../styles/HomePage.css'; // Reuse existing styles for consistency
+import '../styles/HomePage.css';
 import { Link } from 'react-router-dom';
-import { FaFacebookF } from 'react-icons/fa'; // Import Facebook icon
-import { FaGoogle } from 'react-icons/fa';   // Import Google icon
-import { FaInstagram } from 'react-icons/fa'; // Import Instagram icon
+import { FaFacebookF } from 'react-icons/fa';
+import { FaGoogle } from 'react-icons/fa';
+import { FaInstagram } from 'react-icons/fa';
 
 const AboutUs = () => {
   return (
@@ -11,7 +11,7 @@ const AboutUs = () => {
       {/* About Us Header */}
       <section className="hero" style={{ minHeight: '50vh', background: 'linear-gradient(120deg, var(--primary-blue) 0%, var(--white) 70%)' }}>
         <div className="hero-content">
-          <div className="hero-text" style={{ textAlign: 'center', color: 'var(--dark-gray)' }}>
+          <div className="hero-text" style={{ textAlign: 'center', color: 'var(--dark-gray)', padding: '2rem' }}>
             <h1 className="hero-title" style={{ color: 'var(--primary-blue)' }}>
               About Us
             </h1>
@@ -25,10 +25,10 @@ const AboutUs = () => {
       {/* About Us Content */}
       <section className="about" style={{ padding: '4rem 0', backgroundColor: 'var(--white)' }}>
         <div className="container">
-          <div className="about-content" style={{ flexDirection: 'column', gap: '3rem' }}>
+          <div className="about-content" style={{ flexDirection: 'column', gap: '3rem', alignItems: 'center' }}>
             <div className="about-text" data-aos="fade-up">
-              <h2>What is the Company About?</h2>
-              <p>
+              <h2 className="about-heading">What is the Company About?</h2>
+              <p className="about-paragraph">
                 Kyushu Edu Consultancy is a leading educational and immigration support provider dedicated to helping
                 individuals explore opportunities in Japan. We specialize in offering a wide range of services including
                 language training, visa processing, and cultural integration programs. Our team is passionate about
@@ -36,29 +36,29 @@ const AboutUs = () => {
               </p>
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="200">
-              <h2>What is Its Goal?</h2>
-              <p>
+              <h2 className="about-heading">What is Its Goal?</h2>
+              <p className="about-paragraph">
                 Our goal is to empower 10,000 individuals to successfully relocate and thrive in Japan by 2030. We aim
                 to achieve this by providing top-notch educational resources, streamlined visa assistance, and
                 personalized career guidance, ensuring every client achieves their dream of living in Japan.
               </p>
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="400">
-              <h2>Till How Much Time It Has Been Working?</h2>
-              <p>
+              <h2 className="about-heading">Till How Much Time It Has Been Working?</h2>
+              <p className="about-paragraph">
                 Kyushu Edu Consultancy has been proudly serving clients for the past 7 years, since our establishment in
                 2018. Over this period, we have grown from a small startup to a trusted name in educational consultancy,
                 helping hundreds of individuals achieve their goals.
               </p>
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="600">
-              <h2>Why Choose Us?</h2>
-              <p>
+              <h2 className="about-heading">Why Choose Us?</h2>
+              <p className="about-paragraph">
                 Choose Kyushu Edu Consultancy for our unmatched expertise, personalized support, and a proven track
                 record of success. With a team of dedicated professionals and a commitment to excellence, we offer
                 tailored solutions that make your journey to Japan seamless and rewarding.
               </p>
-              <Link to="/contact" className="btn btn-primary" style={{ marginTop: '1rem' }}>
+              <Link to="/contact" className="btn btn-primary" style={{ marginTop: '2rem', display: 'block', textAlign: 'center' }}>
                 Contact Us
               </Link>
             </div>

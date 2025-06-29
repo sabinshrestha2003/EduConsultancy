@@ -84,8 +84,8 @@ const HomePage = () => {
             </div>
             <div className="service-card" data-aos="fade-up" data-aos-delay="300">
               <div className="service-icon">✈️</div>
-              <h3>Working Visa Assistance</h3>
-              <p>Expert guidance for visa applications and a smooth transition to Japan.</p>
+              <h3>Visa Assistance</h3>
+              <p>Expert guidance for working visa and student visa applications and a smooth transition to Japan.</p>
               <Link to="/visa" className="service-link">
                 Get Started <span className="arrow">→</span>
               </Link>

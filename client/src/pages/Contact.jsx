@@ -137,9 +137,9 @@ const Contact = () => {
                 Reach out to us anytime with the details below:
               </p>
               <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li>📧 Email: info@kyushuedu.com</li>
-                <li>📞 Phone: +123-456-7890</li>
-                <li>📍 Address: 123 Education Street, Tokyo, Japan</li>
+                <li>📧 Email: kyushuedu@gmail.com</li>
+                <li>📞 Phone: +014581248</li>
+                <li>📍 Address: Chabahil, Kathmandu, Nepal</li>
               </ul>
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="400">

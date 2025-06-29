@@ -7,7 +7,6 @@ import ExploreClasses from './pages/ExploreClasses';
 import Documentation from './pages/Documentation';
 import VisaAssistance from './pages/VisaAssistance';
 import Location from './pages/Location';
-import Testimonials from './pages/Testimonials';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
 import AdminLogin from './pages/AdminLogin';
@@ -50,7 +49,6 @@ function Dropdown({ closeMenu }) {
         <NavLink to="/documentation" onClick={closeMenu}>Documentation</NavLink>
         <NavLink to="/visa" onClick={closeMenu}>Visa Assistance</NavLink>
         <NavLink to="/location" onClick={closeMenu}>Location</NavLink>
-        <NavLink to="/testimonials" onClick={closeMenu}>Testimonials</NavLink>
       </div>
     </div>
   );
@@ -154,7 +152,6 @@ function App() {
             <Route path="/documentation" element={<Documentation />} />
             <Route path="/visa" element={<VisaAssistance />} />
             <Route path="/location" element={<Location />} />
-            <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsAndConditions />} />
             <Route path="/admin-login" element={<AdminLogin />} />

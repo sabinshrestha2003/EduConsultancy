@@ -16,7 +16,7 @@ const VisaAssistance = () => {
               Visa Assistance
             </h1>
             <p className="hero-description" style={{ color: 'var(--dark-gray)', maxWidth: '800px', margin: '0 auto' }}>
-              Expert support for your working visa to Japan.
+              Expert support for your working visa and student visa to Japan.
             </p>
           </div>
         </div>
@@ -29,8 +29,8 @@ const VisaAssistance = () => {
             <div className="about-text" data-aos="fade-up">
               <h2>Overview of Visa Services</h2>
               <p>
-                Our visa assistance service helps you navigate the complexities of obtaining a working visa for Japan.
-                Whether you're a skilled professional or a recent graduate, we provide tailored support to ensure your
+                Our visa assistance service helps you navigate the complexities of obtaining a working visa or student visa for Japan.
+                Whether you're a skilled professional, a recent graduate, or a student seeking education, we provide tailored support to ensure your
                 application meets all requirements set by the Japanese Immigration Services.
               </p>
             </div>
@@ -38,9 +38,9 @@ const VisaAssistance = () => {
               <h2>Application Process</h2>
               <ol style={{ paddingLeft: '20px' }}>
                 <li>Submit your initial application and personal details.</li>
-                <li>Provide required documents (e.g., job offer, passport).</li>
+                <li>Provide required documents (e.g., job offer, passport, or student enrollment).</li>
                 <li>Attend an interview (if required) with our guidance.</li>
-                <li>Receive visa approval and support for relocation.</li>
+                <li>Receive visa approval and support for relocation or study preparation.</li>
               </ol>
               <p>
                 Our team will assist you at every step, ensuring a smooth and efficient process.
@@ -49,7 +49,7 @@ const VisaAssistance = () => {
             <div className="about-text" data-aos="fade-up" data-aos-delay="400">
               <h2>Start Your Visa Journey</h2>
               <p>
-                Take the first step toward working in Japan. Contact us today for personalized visa assistance.
+                Take the first step toward working or studying in Japan. Contact us today for personalized visa assistance.
               </p>
               <Link to="/contact" className="btn btn-primary" style={{ marginTop: '1rem' }}>
                 Contact Us
