@@ -7,33 +7,43 @@ const AdminLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [token, setToken] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setMessage('');
+
     try {
       const response = await fetch('http://localhost:5000/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
+
       const data = await response.json();
-      setMessage(data.message);
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
       if (data.token) {
-        setToken(data.token);
         localStorage.setItem('adminToken', data.token);
-        console.log('Token stored:', data.token);
-        navigate('/dashboard'); // Redirect to dashboard on success
+        // Force a refresh of the authentication state
+        window.dispatchEvent(new Event('storage'));
+        navigate('/dashboard', { replace: true });
       }
     } catch (error) {
-      setMessage('Server error');
+      setMessage(error.message || 'Login failed. Please try again.');
+      console.error('Login error:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="homepage">
-      {/* Admin Login Header */}
       <section className="hero" style={{ minHeight: '40vh', background: 'linear-gradient(120deg, var(--primary-blue) 0%, var(--white) 70%)' }}>
         <div className="hero-content">
           <div className="hero-text" style={{ textAlign: 'center', color: 'var(--dark-gray)' }}>
@@ -47,7 +57,6 @@ const AdminLogin = () => {
         </div>
       </section>
 
-      {/* Admin Login Content */}
       <section className="about" style={{ padding: '4rem 0', backgroundColor: 'var(--white)' }}>
         <div className="container">
           <div className="about-content" style={{ flexDirection: 'column', gap: '2rem', alignItems: 'center' }}>
@@ -64,6 +73,7 @@ const AdminLogin = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     style={{ width: '100%', padding: '0.5rem', border: '1px solid var(--gray)', borderRadius: '4px' }}
                     placeholder="Enter username"
+                    required
                   />
                 </div>
                 <div style={{ marginBottom: '1rem' }}>
@@ -76,17 +86,26 @@ const AdminLogin = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     style={{ width: '100%', padding: '0.5rem', border: '1px solid var(--gray)', borderRadius: '4px' }}
                     placeholder="Enter password"
+                    required
                   />
                 </div>
                 <button
                   type="submit"
                   style={{ width: '100%', padding: '0.75rem', backgroundColor: 'var(--primary-blue)', color: 'var(--white)', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                  disabled={isLoading}
                 >
-                  Login
+                  {isLoading ? 'Logging in...' : 'Login'}
                 </button>
               </form>
-              {message && <p style={{ marginTop: '1rem', color: message.includes('Invalid') ? 'red' : 'green' }}>{message}</p>}
-              {token && <p>Token: {token.substring(0, 20)}...</p>}
+              {message && (
+                <p style={{ 
+                  marginTop: '1rem', 
+                  color: message.toLowerCase().includes('fail') ? 'red' : 'green',
+                  textAlign: 'center'
+                }}>
+                  {message}
+                </p>
+              )}
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="200">
               <p>
@@ -97,7 +116,6 @@ const AdminLogin = () => {
         </div>
       </section>
 
-      {/* Footer (Reused from HomePage) */}
       <footer className="footer">
         <div className="container">
           <div className="footer-content">

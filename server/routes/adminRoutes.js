@@ -61,6 +61,20 @@ router.post('/track-visit', async (req, res) => {
   }
 });
 
+router.put('/contact/:id/status', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const submission = await ContactSubmission.findByIdAndUpdate(id, { status }, { new: true, runValidators: true });
+    if (!submission) {
+      return res.status(404).json({ message: 'Submission not found' });
+    }
+    res.status(200).json({ message: 'Status updated successfully', submission });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+});
+
 router.get('/dashboard', authenticateToken, async (req, res) => {
   try {
     const adminData = {

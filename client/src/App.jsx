@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import HomePage from './pages/HomePage';
 import AboutUs from './pages/AboutUs';
@@ -58,12 +58,14 @@ function Dropdown({ closeMenu }) {
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('adminToken'));
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return !!localStorage.getItem('adminToken');
+  });
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
-    // Track visit on page load
     const trackVisit = async () => {
       try {
         await fetch('http://localhost:5000/api/admin/track-visit', {
@@ -76,24 +78,19 @@ function App() {
     };
     trackVisit();
 
-    // Update authentication status when token changes
-    const checkAuth = () => {
-      const token = localStorage.getItem('adminToken');
-      setIsAuthenticated(!!token);
-      if (!token) {
-        window.location.href = '/admin-login';
-      }
+    const handleStorageChange = () => {
+      setIsAuthenticated(!!localStorage.getItem('adminToken'));
     };
-    checkAuth();
-    window.addEventListener('storage', checkAuth);
-    return () => window.removeEventListener('storage', checkAuth);
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     setIsAuthenticated(false);
     closeMenu();
-    window.location.href = '/admin-login';
+    window.location.href = '/';
   };
 
   return (
@@ -161,7 +158,16 @@ function App() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsAndConditions />} />
             <Route path="/admin-login" element={<AdminLogin />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route 
+              path="/dashboard" 
+              element={
+                isAuthenticated ? (
+                  <Dashboard />
+                ) : (
+                  <Navigate to="/admin-login" replace state={{ from: '/dashboard' }} />
+                )
+              } 
+            />
           </Routes>
         </main>
       </div>
