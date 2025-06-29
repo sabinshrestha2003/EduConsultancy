@@ -87,9 +87,9 @@ const ExploreClasses = () => {
             <div className="footer-section">
               <h3>Contact Us</h3>
               <div className="contact-info">
-                <p>📧 info@kyushuedu.com</p>
-                <p>📞 +123-456-7890</p>
-                <p>📍 123 Education Street, Tokyo, Japan</p>
+                <p>📧 kyushuedu@gmail.com</p>
+                <p>📞 +014581248</p>
+                <p>📍 Chabahil, Kathmandu, Nepal</p>
               </div>
             </div>
             <div className="footer-section">

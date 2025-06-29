@@ -1,17 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/HomePage.css';
 import { Link } from 'react-router-dom';
 import { FaFacebookF } from 'react-icons/fa'; // Facebook icon
 import { FaGoogle } from 'react-icons/fa';   // Google icon
 import { FaInstagram } from 'react-icons/fa'; // Instagram icon
-import FujiImage from '../assets/fuji.jpg'; // Import the Fuji image
+import CityImage from '../assets/city.jpg';
+import KyotoImage from '../assets/kyoto.jpg';
+import OsakaImage from '../assets/osaka.jpg';
+import TokyoImage from '../assets/tokyo.jpg';
 
 const HomePage = () => {
+  const images = [CityImage, KyotoImage, OsakaImage, TokyoImage]; // Array of image imports
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000); // Change image every 5 seconds
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [images.length]);
+
   return (
     <div className="homepage">
-      {/* Hero Section */}
+      {/* Hero Section with Slideshow */}
       <section className="hero">
-        <div className="hero-background"></div>
+        <div
+          className="hero-background"
+          style={{
+            backgroundImage: `url(${images[currentImageIndex]})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            transition: 'background-image 1s ease-in-out',
+          }}
+        ></div>
         <div className="hero-content">
           <div className="hero-text">
             <h1 className="hero-title">
@@ -102,7 +123,7 @@ const HomePage = () => {
               </Link>
             </div>
             <div className="about-visual" data-aos="fade-left">
-              <img src={FujiImage} alt="Mount Fuji, Japan" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={CityImage} alt="City view, Japan" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           </div>
         </div>
@@ -130,9 +151,9 @@ const HomePage = () => {
             <div className="footer-section">
               <h3>Contact Us</h3>
               <div className="contact-info">
-                <p>📧 info@kyushuedu.com</p>
-                <p>📞 +123-456-7890</p>
-                <p>📍 123 Education Street, Tokyo, Japan</p>
+                <p>📧 kyushuedu@gmail.com</p>
+                <p>📞 +014581248</p>
+                <p>📍 Chabahil, Kathmandu, Nepal</p>
               </div>
             </div>
             <div className="footer-section">

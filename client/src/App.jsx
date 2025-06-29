@@ -118,11 +118,11 @@ function App() {
             <div className="navbar-contact">
               <a href="tel:+15551234567" className="contact-link">
                 <span className="contact-icon">📞</span>
-                <span className="contact-text">+1-555-123-4567</span>
+                <span className="contact-text">+014581248</span>
               </a>
               <a href="mailto:info@kyushuedu.com" className="contact-link">
                 <span className="contact-icon">📧</span>
-                <span className="contact-text">info@kyushuedu.com</span>
+                <span className="contact-text">kyushuedu@gmail.com</span>
               </a>
               {isAuthenticated && (
                 <button
