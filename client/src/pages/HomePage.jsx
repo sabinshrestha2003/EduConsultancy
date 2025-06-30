@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/HomePage.css';
 import { Link } from 'react-router-dom';
 import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa';
@@ -6,24 +6,50 @@ import CityImage from '../assets/city.jpg';
 import KyotoImage from '../assets/kyoto.jpg';
 import OsakaImage from '../assets/osaka.jpg';
 import TokyoImage from '../assets/tokyo.jpg';
-import Instructor1 from '../assets/instructor1.jpg'; // Placeholder for instructor images
-import Instructor2 from '../assets/instructor2.jpg'; // Placeholder for instructor images
+import CherryImage from '../assets/cherry.jpg';
+import NightCityImage from '../assets/nightcity.jpg';
+import StreetImage from '../assets/street.jpg';
+import Instructor1 from '../assets/instructor1.jpg';
+import Instructor2 from '../assets/instructor2.jpg';
 
 const HomePage = () => {
-  const images = [CityImage, KyotoImage, OsakaImage, TokyoImage];
+  const images = [CityImage, KyotoImage, OsakaImage, TokyoImage, CherryImage, NightCityImage, StreetImage];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [activeFAQ, setActiveFAQ] = useState(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const rafRef = useRef(null);
 
   useEffect(() => {
+    // Preload images
+    images.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+
+    const transition = () => {
+      if (!isTransitioning) {
+        setIsTransitioning(true);
+        setTimeout(() => {
+          setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+          setIsTransitioning(false);
+        }, 1000); // Matches CSS transition duration
+      }
+    };
+
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [images.length]);
+      rafRef.current = requestAnimationFrame(transition);
+    }, 4000); // 3s display + 1s transition
+
+    return () => {
+      clearInterval(interval);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [images.length, isTransitioning]);
 
   const toggleFAQ = (index) => {
-    setActiveFAQ(activeFAQ === index ? null : index);
+    setActiveFAQ((prev) => (prev === index ? null : index));
   };
+
+  const [activeFAQ, setActiveFAQ] = useState(null);
 
   const instructors = [
     { name: "Hiroshi Tanaka", role: "Japanese Instructor", bio: "Specializes in N5-N2 with 8 years of experience.", image: Instructor1 },
@@ -34,15 +60,14 @@ const HomePage = () => {
     <div className="homepage">
       {/* Hero Section with Slideshow */}
       <section className="hero">
-        <div
-          className="hero-background"
-          style={{
-            backgroundImage: `url(${images[currentImageIndex]})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            transition: 'background-image 1s ease-in-out',
-          }}
-        ></div>
+        <div className="hero-background">
+          <div
+            className={`hero-image ${isTransitioning ? 'fade-out' : 'fade-in'}`}
+            style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
+            aria-label="Slideshow image"
+          ></div>
+        </div>
+        <div className="hero-overlay"></div>
         <div className="hero-content">
           <div className="hero-text">
             <h1 className="hero-title">
