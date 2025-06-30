@@ -61,11 +61,11 @@ const Contact = () => {
           body: JSON.stringify(formData),
         });
         const data = await response.json();
-        setSubmitMessage(data.message || 'Form submitted successfully!');
+        setSubmitMessage(data.message || 'Form submitted successfully! We’ll contact you soon.');
         setFormData({ name: '', email: '', message: '' });
         setErrors({ name: '', email: '', message: '' });
       } catch (error) {
-        setSubmitMessage('Error submitting form. Please try again.');
+        setSubmitMessage('Error submitting form. Please try again or visit us in Chabahil.');
       }
     }
   };
@@ -75,23 +75,24 @@ const Contact = () => {
       {/* Contact Header */}
       <section className="hero" style={{ minHeight: '50vh', background: 'linear-gradient(120deg, var(--primary-blue) 0%, var(--white) 70%)' }}>
         <div className="hero-content">
-          <div className="hero-text" style={{ textAlign: 'center', color: 'var(--dark-gray)' }}>
+          <div className="hero-text">
             <h1 className="hero-title" style={{ color: 'var(--primary-blue)' }}>
               Contact Us
             </h1>
             <p className="hero-description" style={{ color: 'var(--dark-gray)', maxWidth: '800px', margin: '0 auto' }}>
-              Get in touch with us for support and inquiries.
+              Get in touch or visit our Chabahil office for personalized support on your journey to Japan.
             </p>
           </div>
         </div>
       </section>
 
       {/* Contact Content */}
-      <section className="about" style={{ padding: '4rem 0', backgroundColor: 'var(--white)' }}>
+      <section className="about">
         <div className="container">
           <div className="about-content" style={{ flexDirection: 'column', gap: '3rem' }}>
             <div className="about-text" data-aos="fade-up">
               <h2>Contact Form</h2>
+              <p>Fill out the form below or stop by our office for immediate assistance.</p>
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '500px' }}>
                 <input
                   type="text"
@@ -133,41 +134,37 @@ const Contact = () => {
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="200">
               <h2>Contact Information</h2>
-              <p>
-                Reach out to us anytime with the details below:
-              </p>
+              <p>Reach out or visit us at:</p>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 <li>📧 Email: kyushuedu@gmail.com</li>
                 <li>📞 Phone: +014581248</li>
-                <li>📍 Address: Chabahil, Kathmandu, Nepal</li>
+                <li>📍 Address: Chabahil, Kathmandu, Nepal (5 mins from Chabahil Chowk)</li>
               </ul>
+              <Link to="/location" className="btn btn-outline" style={{ marginTop: '1rem' }}>
+                View Map
+              </Link>
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="400">
-              <h2>Let’s Connect</h2>
-              <p>
-                We’re here to assist you on your journey to Japan. Feel free to reach out or follow us on social media
-                for updates and support.
-              </p>
-              <Link to="/about" className="btn btn-outline" style={{ marginTop: '1rem' }}>
-                Learn More About Us
-              </Link>
+              <h2>Office Hours</h2>
+              <p>Monday–Friday: 9:00 AM – 6:00 PM | Saturday: 10:00 AM – 2:00 PM | Sunday: Closed</p>
+              <p>Drop by during these hours for a consultation!</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer (Reused from HomePage) */}
+      {/* Footer */}
       <footer className="footer">
         <div className="container">
           <div className="footer-content">
             <div className="footer-section">
               <h3>Kyushu Edu Consultancy</h3>
-              <p>Empowering your journey to Japan with expert solutions.</p>
+              <p>Empowering your journey to Japan with expert solutions. Visit us in Chabahil!</p>
               <div className="social-links">
                 <a href="https://www.facebook.com/kyushuedu/" target="_blank" rel="noopener noreferrer" className="social-link">
                   <FaFacebookF />
                 </a>
-                <a href="mailto:kyusu@gmail.com" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href="mailto:kyushuedu@gmail.com" target="_blank" rel="noopener noreferrer" className="social-link">
                   <FaGoogle />
                 </a>
                 <a href="https://www.instagram.com/kyushuedu/?hl=en" target="_blank" rel="noopener noreferrer" className="social-link">

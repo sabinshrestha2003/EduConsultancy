@@ -24,6 +24,7 @@ body {
   background: linear-gradient(180deg, var(--white) 0%, var(--light-gray) 80%);
 }
 
+/* Container */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -365,7 +366,316 @@ body {
 }
 
 .about-visual img {
-  border-radius: 10px; /* Match the container's border-radius */
+  border-radius: 10px;
+}
+
+/* Timeline Section */
+.timeline {
+  padding: 4rem 0;
+  background-color: var(--white);
+  width: 100vw;
+}
+
+.timeline-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.timeline-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background-color: var(--light-gray);
+}
+
+.timeline-step {
+  position: relative;
+  width: 45%;
+  padding: 1.5rem;
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.timeline-step:nth-child(even) {
+  margin-left: auto;
+}
+
+.timeline-circle {
+  position: absolute;
+  top: 20px;
+  left: -10%;
+  width: 12px;
+  height: 12px;
+  background-color: var(--primary-blue);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-step h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--dark-gray);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-step p {
+  font-size: 0.95rem;
+  color: var(--dark-gray);
+  opacity: 0.8;
+}
+
+/* FAQ Section */
+.faq {
+  padding: 4rem 0;
+  background-color: var(--light-gray);
+  width: 100vw;
+}
+
+.faq-content {
+  display: grid;
+  gap: 1rem;
+}
+
+.faq-item {
+  background-color: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.faq-question {
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark-gray);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-toggle {
+  transition: transform 0.3s ease;
+}
+
+.faq-toggle.open {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  padding: 0 1rem 1rem;
+  font-size: 0.95rem;
+  color: var(--dark-gray);
+  opacity: 0.8;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-answer.open {
+  max-height: 200px;
+}
+
+/* Pathways Section */
+.pathways {
+  padding: 4rem 0;
+  background-color: var(--white);
+  width: 100vw;
+}
+
+.pathways-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.pathway-card {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border: 1px solid var(--light-gray);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  color: var(--dark-gray);
+  transition: all 0.3s ease;
+}
+
+.pathway-card:hover {
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.1);
+  transform: translateY(-5px);
+}
+
+.pathway-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.pathway-card p {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+/* Team Section */
+.team {
+  padding: 4rem 0;
+  background-color: var(--light-gray);
+  width: 100vw;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.team-card {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.team-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.team-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--dark-gray);
+  margin-bottom: 0.5rem;
+}
+
+.team-role {
+  font-size: 0.9rem;
+  color: var(--primary-blue);
+  margin-bottom: 0.5rem;
+}
+
+.team-bio {
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+  opacity: 0.8;
+}
+
+/* Info Hub Section */
+.info-hub {
+  padding: 4rem 0;
+  background-color: var(--white);
+  width: 100vw;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.info-card {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border: 1px solid var(--light-gray);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  color: var(--dark-gray);
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.1);
+  transform: translateY(-5px);
+}
+
+.info-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.info-card p {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+/* Map Section */
+.map {
+  padding: 4rem 0;
+  background-color: var(--light-gray);
+  width: 100vw;
+}
+
+.map-content {
+  position: relative;
+  margin-top: 2rem;
+}
+
+.map-directions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--white);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.map-directions p {
+  font-size: 0.9rem;
+  color: var(--dark-gray);
+  margin-bottom: 0.5rem;
+}
+
+/* Why Japan Section */
+.why-japan {
+  padding: 4rem 0;
+  background-color: var(--white);
+  width: 100vw;
+}
+
+.why-japan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.why-japan-card {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border: 1px solid var(--light-gray);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.why-japan-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-bottom: 0.5rem;
+}
+
+.why-japan-card p {
+  font-size: 0.95rem;
+  color: var(--dark-gray);
+  opacity: 0.8;
 }
 
 /* Footer */
@@ -431,10 +741,6 @@ body {
   transform: translateY(-2px);
 }
 
-.social-link i {
-  font-size: inherit;
-}
-
 .footer-links {
   display: flex;
   flex-direction: column;
@@ -465,7 +771,7 @@ body {
   .hero-title { font-size: 2rem; }
   .hero-description { font-size: 1rem; }
   .hero-buttons { flex-direction: column; align-items: center; gap: 0.8rem; }
-  .services-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .services-grid, .pathways-grid, .info-grid, .why-japan-grid { grid-template-columns: 1fr; gap: 1rem; }
   .about-content { grid-template-columns: 1fr; gap: 1.5rem; }
   .stats { justify-content: center; flex-wrap: wrap; }
   .section-title { font-size: 1.8rem; }
@@ -473,14 +779,19 @@ body {
   .footer-content { grid-template-columns: 1fr; text-align: center; }
   .social-links { justify-content: center; }
   .about-visual { height: 250px; }
+  .timeline-content::before { left: 20px; }
+  .timeline-step { width: 90%; margin-left: 0; }
+  .timeline-step:nth-child(even) { margin-left: 0; }
+  .map-directions { position: static; margin-top: 1rem; }
 }
 
 @media (max-width: 480px) {
   .container { padding: 0 10px; }
   .hero-title { font-size: 1.8rem; }
   .btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
-  .service-card { padding: 1rem; }
+  .service-card, .pathway-card, .info-card, .why-japan-card { padding: 1rem; }
   .stats { flex-direction: column; gap: 0.8rem; }
+  .team-image { height: 150px; }
 }
 
 /* Smooth scrolling and Accessibility */
@@ -489,7 +800,8 @@ html { scroll-behavior: smooth; }
 .btn:focus,
 .service-link:focus,
 .social-link:focus,
-.footer-links a:focus {
+.footer-links a:focus,
+.faq-question:focus {
   outline: 2px solid var(--primary-blue);
   outline-offset: 2px;
 }
