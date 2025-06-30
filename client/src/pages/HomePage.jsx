@@ -146,6 +146,41 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* About Section */}
+      <section className="about">
+        <div className="container">
+          <div className="about-content">
+            <div className="about-text" data-aos="fade-right">
+              <h2>Why Choose Us?</h2>
+              <p>
+                We empower students and professionals with top-tier educational and visa services. Our expert team
+                ensures success with personalized Japanese training and comprehensive documentation support.
+              </p>
+              <div className="stats">
+                <div className="stat">
+                  <div className="stat-number">500+</div>
+                  <div className="stat-label">Students Helped</div>
+                </div>
+                <div className="stat">
+                  <div className="stat-number">95%</div>
+                  <div className="stat-label">Success Rate</div>
+                </div>
+                <div className="stat">
+                  <div className="stat-number">5+</div>
+                  <div className="stat-label">Years Experience</div>
+                </div>
+              </div>
+              <Link to="/success-stories" className="btn btn-outline">
+                See Success Stories
+              </Link>
+            </div>
+            <div className="about-visual" data-aos="fade-left">
+              <img src={CityImage} alt="City view, Japan" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Meet Our Team Spotlight */}
       <section className="team">
         <div className="container">

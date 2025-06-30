@@ -61,11 +61,11 @@ const Contact = () => {
           body: JSON.stringify(formData),
         });
         const data = await response.json();
-        setSubmitMessage(data.message || 'Form submitted successfully! We’ll contact you soon.');
+        setSubmitMessage(data.message || 'Form submitted successfully! We’ll contact you soon or invite you to visit our Chabahil office.');
         setFormData({ name: '', email: '', message: '' });
         setErrors({ name: '', email: '', message: '' });
       } catch (error) {
-        setSubmitMessage('Error submitting form. Please try again or visit us in Chabahil.');
+        setSubmitMessage('Error submitting form. Please try again or visit us in Chabahil for assistance.');
       }
     }
   };
@@ -80,7 +80,7 @@ const Contact = () => {
               Contact Us
             </h1>
             <p className="hero-description" style={{ color: 'var(--dark-gray)', maxWidth: '800px', margin: '0 auto' }}>
-              Get in touch or visit our Chabahil office for personalized support on your journey to Japan.
+              Get started by filling out the form below or visit our Chabahil office for personalized guidance on your journey to Japan.
             </p>
           </div>
         </div>
@@ -92,12 +92,12 @@ const Contact = () => {
           <div className="about-content" style={{ flexDirection: 'column', gap: '3rem' }}>
             <div className="about-text" data-aos="fade-up">
               <h2>Contact Form</h2>
-              <p>Fill out the form below or stop by our office for immediate assistance.</p>
+              <p>Submit your details to get in touch, or visit our Chabahil office for immediate support with your inquiries.</p>
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '500px' }}>
                 <input
                   type="text"
                   name="name"
-                  placeholder="Your Name"
+                  placeholder="Your Full Name"
                   value={formData.name}
                   onChange={handleChange}
                   style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }}
@@ -106,7 +106,7 @@ const Contact = () => {
                 <input
                   type="email"
                   name="email"
-                  placeholder="Your Email"
+                  placeholder="Your Email Address"
                   value={formData.email}
                   onChange={handleChange}
                   style={{ padding: '0.5rem', border: '1px solid var(--light-gray)', borderRadius: '5px' }}
@@ -114,7 +114,7 @@ const Contact = () => {
                 {errors.email && <p style={{ color: 'red', fontSize: '0.8rem' }}>{errors.email}</p>}
                 <textarea
                   name="message"
-                  placeholder="Your Message"
+                  placeholder="Your Message or Inquiry"
                   value={formData.message}
                   onChange={handleChange}
                   rows="5"
@@ -124,30 +124,45 @@ const Contact = () => {
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  style={{ width: 'fit-content', alignSelf: 'flex-start' }}
+                  style={{ width: 'fit-content', alignSelf: 'flex-start', padding: '0.75rem 1.5rem' }}
                   disabled={Object.values(errors).some(error => error) || !Object.values(formData).every(value => value.trim())}
                 >
-                  Send Message
+                  Submit Inquiry
                 </button>
                 {submitMessage && <p style={{ marginTop: '1rem', color: submitMessage.includes('Error') ? 'red' : 'green' }}>{submitMessage}</p>}
               </form>
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="200">
-              <h2>Contact Information</h2>
-              <p>Reach out or visit us at:</p>
+              <h2>Visit Our Office</h2>
+              <p>We encourage all students to visit our Chabahil office for detailed consultations, document reviews, and personalized advice.</p>
               <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li>📧 Email: kyushuedu@gmail.com</li>
-                <li>📞 Phone: +014581248</li>
-                <li>📍 Address: Chabahil, Kathmandu, Nepal (5 mins from Chabahil Chowk)</li>
+                <li>📍 <strong>Location:</strong> Chabahil, Kathmandu, Nepal (5 minutes from Chabahil Chowk)</li>
+                <li>⏰ <strong>Office Hours:</strong> Monday–Friday: 9:00 AM – 6:00 PM | Saturday: 10:00 AM – 2:00 PM | Sunday: Closed</li>
+                <li>🚶‍♂️ <strong>Accessibility:</strong> Easily reachable by public transport; parking available nearby</li>
+                <li>💡 <strong>What to Expect:</strong> Meet our team, explore our facilities, and get tailored support</li>
               </ul>
-              <Link to="/location" className="btn btn-outline" style={{ marginTop: '1rem' }}>
-                View Map
+              <Link to="/location" className="btn btn-primary" style={{ marginTop: '1rem' }}>
+                Get Directions
               </Link>
             </div>
             <div className="about-text" data-aos="fade-up" data-aos-delay="400">
-              <h2>Office Hours</h2>
-              <p>Monday–Friday: 9:00 AM – 6:00 PM | Saturday: 10:00 AM – 2:00 PM | Sunday: Closed</p>
-              <p>Drop by during these hours for a consultation!</p>
+              <h2>Additional Contact Options</h2>
+              <p>For urgent inquiries, feel free to reach out, but we recommend visiting for the best experience.</p>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                <li>📧 <strong>Email:</strong> kyushuedu@gmail.com</li>
+                <li>📞 <strong>Phone:</strong> +014581248 (Available during office hours)</li>
+              </ul>
+              <div className="social-links" style={{ marginTop: '1rem' }}>
+                <a href="https://www.facebook.com/kyushuedu/" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <FaFacebookF />
+                </a>
+                <a href="mailto:kyushuedu@gmail.com" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <FaGoogle />
+                </a>
+                <a href="https://www.instagram.com/kyushuedu/?hl=en" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <FaInstagram />
+                </a>
+              </div>
             </div>
           </div>
         </div>

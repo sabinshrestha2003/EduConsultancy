@@ -11,6 +11,10 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
 import AdminLogin from './pages/AdminLogin';
 import Dashboard from './pages/Dashboard';
+import SuccessStories from './pages/SuccessStories';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
+import OfficeInfo from './pages/OfficeInfo'; // Added OfficeInfo component
 import kyushulogo from './assets/kyushulogo.png';
 import './App.css';
 
@@ -49,6 +53,9 @@ function Dropdown({ closeMenu }) {
         <NavLink to="/documentation" onClick={closeMenu}>Documentation</NavLink>
         <NavLink to="/visa" onClick={closeMenu}>Visa Assistance</NavLink>
         <NavLink to="/location" onClick={closeMenu}>Location</NavLink>
+        <NavLink to="/success-stories" onClick={closeMenu}>Success Stories</NavLink>
+        <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
+        <NavLink to="/office-info" onClick={closeMenu}>Office Info</NavLink> {/* Added Office Info link */}
       </div>
     </div>
   );
@@ -165,6 +172,10 @@ function App() {
                 )
               } 
             />
+            <Route path="/success-stories" element={<SuccessStories />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/office-info" element={<OfficeInfo />} /> {/* Added OfficeInfo route */}
           </Routes>
         </main>
       </div>
