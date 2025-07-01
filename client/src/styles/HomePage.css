@@ -89,18 +89,28 @@ body {
   height: 100%;
   background-size: cover;
   background-position: center;
-  transition: opacity 1s ease-in-out;
-  animation: zoom 12s infinite ease-in-out;
-  will-change: opacity;
-  transform: translateZ(0);
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+  will-change: transform, opacity;
+  transform: translateX(0) scale(1);
+  z-index: 1;
 }
 
-.hero-image.fade-in {
-  opacity: 1;
-}
-
-.hero-image.fade-out {
+.hero-image.next {
   opacity: 0;
+  transform: translateX(100%) scale(1.1);
+  z-index: 0;
+}
+
+.hero-image.active {
+  opacity: 1;
+  transform: translateX(0) scale(1.1);
+  z-index: 1;
+}
+
+.hero-image.prev {
+  opacity: 0;
+  transform: translateX(-100%) scale(1);
+  z-index: 0;
 }
 
 .hero-overlay {
@@ -109,8 +119,9 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 70%);
   z-index: 2;
+  transition: background 0.8s ease-in-out;
 }
 
 .hero-content {
@@ -652,7 +663,7 @@ body {
 
 .info-card h3 {
   font-size: 1.6rem;
-  font-weight: 600 “‘Times New Roman’, Times, serif”;
+  font-weight: 600;
   margin-bottom: 1rem;
 }
 

@@ -15,7 +15,6 @@ import Instructor2 from '../assets/instructor2.jpg';
 const HomePage = () => {
   const images = [CityImage, KyotoImage, OsakaImage, TokyoImage, CherryImage, NightCityImage, StreetImage];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const rafRef = useRef(null);
 
   useEffect(() => {
@@ -26,24 +25,18 @@ const HomePage = () => {
     });
 
     const transition = () => {
-      if (!isTransitioning) {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-          setIsTransitioning(false);
-        }, 1000); // Matches CSS transition duration
-      }
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
     };
 
     const interval = setInterval(() => {
       rafRef.current = requestAnimationFrame(transition);
-    }, 4000); // 3s display + 1s transition
+    }, 4000); // 0.8s transition + 3.2s display
 
     return () => {
       clearInterval(interval);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [images.length, isTransitioning]);
+  }, [images.length]);
 
   const toggleFAQ = (index) => {
     setActiveFAQ((prev) => (prev === index ? null : index));
@@ -62,9 +55,14 @@ const HomePage = () => {
       <section className="hero">
         <div className="hero-background">
           <div
-            className={`hero-image ${isTransitioning ? 'fade-out' : 'fade-in'}`}
+            className="hero-image"
             style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
             aria-label="Slideshow image"
+          ></div>
+          <div
+            className="hero-image next"
+            style={{ backgroundImage: `url(${images[(currentImageIndex + 1) % images.length]})` }}
+            aria-hidden="true"
           ></div>
         </div>
         <div className="hero-overlay"></div>
