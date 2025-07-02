@@ -1,281 +1,281 @@
-import React, { useState, useEffect, useRef } from 'react';
-import '../styles/HomePage.css';
-import { Link } from 'react-router-dom';
-import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa';
-import CityImage from '../assets/city.jpg';
-import KyotoImage from '../assets/kyoto.jpg';
-import OsakaImage from '../assets/osaka.jpg';
-import TokyoImage from '../assets/tokyo.jpg';
-import CherryImage from '../assets/cherry.jpg';
-import NightCityImage from '../assets/nightcity.jpg';
-import StreetImage from '../assets/street.jpg';
-import Instructor1 from '../assets/instructor1.jpg';
-import Instructor2 from '../assets/instructor2.jpg';
+"use client"
+
+import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
+import {
+  FaFacebookF,
+  FaGoogle,
+  FaInstagram,
+  FaArrowRight,
+  FaPlay,
+  FaGraduationCap,
+  FaPassport,
+  FaUsers,
+  FaChevronDown,
+} from "react-icons/fa"
+import "../styles/HomePage.css"
+
+// Import images
+import CityImage from "../assets/city.jpg"
+import KyotoImage from "../assets/kyoto.jpg"
+import OsakaImage from "../assets/osaka.jpg"
+import TokyoImage from "../assets/tokyo.jpg"
+import CherryImage from "../assets/cherry.jpg"
+import NightCityImage from "../assets/nightcity.jpg"
+import StreetImage from "../assets/street.jpg"
 
 const HomePage = () => {
-  const images = [CityImage, KyotoImage, OsakaImage, TokyoImage, CherryImage, NightCityImage, StreetImage];
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const rafRef = useRef(null);
+  const images = [CityImage, KyotoImage, OsakaImage, TokyoImage, CherryImage, NightCityImage, StreetImage]
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [activeFAQ, setActiveFAQ] = useState(null)
+  const [scrollY, setScrollY] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   useEffect(() => {
     // Preload images
     images.forEach((image) => {
-      const img = new Image();
-      img.src = image;
-    });
+      const img = new Image()
+      img.src = image
+      img.onload = () => console.log(`Loaded: ${image}`)
+      img.onerror = () => console.error(`Failed to load: ${image}`)
+    })
 
     const transition = () => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    };
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
+    }
 
     const interval = setInterval(() => {
-      rafRef.current = requestAnimationFrame(transition);
-    }, 4000); // 0.8s transition + 3.2s display
+      requestAnimationFrame(transition)
+    }, 5000)
 
-    return () => {
-      clearInterval(interval);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [images.length]);
+    return () => clearInterval(interval)
+  }, [images.length])
 
   const toggleFAQ = (index) => {
-    setActiveFAQ((prev) => (prev === index ? null : index));
-  };
+    setActiveFAQ((prev) => (prev === index ? null : index))
+  }
 
-  const [activeFAQ, setActiveFAQ] = useState(null);
+  const stats = [
+    { number: "500+", label: "Students Helped", icon: FaUsers },
+    { number: "95%", label: "Success Rate", icon: FaGraduationCap },
+    { number: "5+", label: "Years Experience", icon: FaPassport },
+  ]
 
-  const instructors = [
-    { name: "Hiroshi Tanaka", role: "Japanese Instructor", bio: "Specializes in N5-N2 with 8 years of experience.", image: Instructor1 },
-    { name: "Aiko Sato", role: "Visa Consultant", bio: "Expert in visa processes with 5 years of guidance.", image: Instructor2 },
-  ];
+  const faqs = [
+    {
+      question: "What documents are needed for Japan visa?",
+      answer:
+        "You'll need a valid passport, application forms, proof of funds, educational certificates, and sponsor documents. We'll guide you through the complete checklist.",
+    },
+    {
+      question: "How long does the visa process take?",
+      answer:
+        "Typically 2-4 weeks for processing, but preparation time varies. Our expert team ensures all documents are perfect before submission.",
+    },
+    {
+      question: "Do I need Japanese language skills?",
+      answer:
+        "Not initially! We offer courses from complete beginner (N5) to advanced levels. Our structured program builds confidence step by step.",
+    },
+    {
+      question: "What are the costs involved?",
+      answer:
+        "Costs vary by program type and duration. Visit our office for a detailed breakdown and personalized consultation based on your goals.",
+    },
+  ]
+
+  const pathways = [
+    {
+      title: "Study in Japan",
+      description: "Academic programs and language courses",
+      icon: FaGraduationCap,
+      link: "/classes",
+    },
+    {
+      title: "Work in Japan",
+      description: "Career opportunities and work visas",
+      icon: FaPassport,
+      link: "/visa",
+    },
+    {
+      title: "Learn Japanese",
+      description: "Language mastery from N5 to N1",
+      icon: FaPlay,
+      link: "/classes",
+    },
+  ]
 
   return (
     <div className="homepage">
-      {/* Hero Section with Slideshow */}
+      {/* Hero Section */}
       <section className="hero">
         <div className="hero-background">
-          <div
-            className="hero-image"
-            style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
-            aria-label="Slideshow image"
-          ></div>
-          <div
-            className="hero-image next"
-            style={{ backgroundImage: `url(${images[(currentImageIndex + 1) % images.length]})` }}
-            aria-hidden="true"
-          ></div>
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className={`hero-slide ${index === currentImageIndex ? "active" : ""}`}
+              style={{
+                backgroundImage: `url(${image})`,
+                transform: `translateY(${scrollY * 0.3}px)`,
+              }}
+            />
+          ))}
+          <div className="hero-overlay" />
         </div>
-        <div className="hero-overlay"></div>
+
         <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="hero-title">
-              <span className="title-line">Your Path to</span>
-              <span className="title-highlight">Japan</span>
-            </h1>
-            <p className="hero-description">
-              Master Japanese, streamline your documentation, and secure your visa with our expert guidance. Visit us in Chabahil!
-            </p>
-            <div className="hero-buttons">
-              <Link to="/classes" className="btn btn-primary">
-                <span>Explore Classes</span>
-                <div className="btn-shine"></div>
-              </Link>
-              <Link to="/contact" className="btn btn-secondary">
-                Visit Us
-              </Link>
-            </div>
+          <div className="hero-badge">
+            <span>🇯🇵 Your Gateway to Japan</span>
+          </div>
+          <h1 className="hero-title">
+            Master Japanese.
+            <br />
+            <span className="accent-text">Achieve Your Dreams.</span>
+          </h1>
+          <p className="hero-description">
+            Expert language training and visa guidance in the heart of Kathmandu. Join 500+ successful students who
+            trusted their Japan journey with us.
+          </p>
+          <div className="hero-buttons">
+            <Link to="/classes" className="btn btn-primary">
+              Start Your Journey
+              <FaArrowRight />
+            </Link>
+            <Link to="/contact" className="btn btn-glass">
+              <FaPlay />
+              Visit Our Office
+            </Link>
           </div>
         </div>
-        <div className="hero-scroll-indicator">
-          <div className="scroll-arrow"></div>
+
+        <div className="scroll-indicator">
+          <div className="scroll-mouse">
+            <div className="scroll-wheel"></div>
+          </div>
+          <span>Scroll to explore</span>
         </div>
       </section>
 
-      {/* Your Journey to Japan Timeline */}
-      <section className="timeline">
+      {/* Stats Section */}
+      <section className="stats-section">
         <div className="container">
-          <h2 className="section-title">Your Journey to Japan</h2>
-          <div className="timeline-content">
-            <div className="timeline-step" data-aos="fade-right">
-              <div className="timeline-circle"></div>
-              <h3>Visit Our Office</h3>
-              <p>Start with a consultation at Chabahil, Kathmandu.</p>
-            </div>
-            <div className="timeline-step" data-aos="fade-right" data-aos-delay="200">
-              <div className="timeline-circle"></div>
-              <h3>Enroll in Classes</h3>
-              <p>Join our tailored Japanese language courses.</p>
-            </div>
-            <div className="timeline-step" data-aos="fade-right" data-aos-delay="400">
-              <div className="timeline-circle"></div>
-              <h3>Complete Documentation</h3>
-              <p>Get support for certificates and forms.</p>
-            </div>
-            <div className="timeline-step" data-aos="fade-right" data-aos-delay="600">
-              <div className="timeline-circle"></div>
-              <h3>Visa Approval</h3>
-              <p>Secure your visa with our expert assistance.</p>
-            </div>
-            <div className="timeline-step" data-aos="fade-right" data-aos-delay="800">
-              <div className="timeline-circle"></div>
-              <h3>Arrive in Japan</h3>
-              <p>Begin your new journey with confidence.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Frequently Asked Questions */}
-      <section className="faq">
-        <div className="container">
-          <h2 className="section-title">Frequently Asked Questions</h2>
-          <div className="faq-content">
-            {[
-              { question: "What documents are needed?", answer: "Passport, application forms, and proof of funds. Visit us for details!" },
-              { question: "How long does it take to get a visa?", answer: "Typically 2-4 weeks. Let us guide you through it." },
-              { question: "Do I need prior Japanese knowledge?", answer: "No, we start from N5. Stop by to learn more!" },
-            ].map((item, index) => (
-              <div key={index} className="faq-item" data-aos="fade-up" data-aos-delay={index * 200}>
-                <div className="faq-question" onClick={() => toggleFAQ(index)}>
-                  {item.question} <span className={`faq-toggle ${activeFAQ === index ? 'open' : ''}`}>▼</span>
+          <div className="stats-grid">
+            {stats.map((stat, index) => (
+              <div key={index} className="stat-card" style={{ animationDelay: `${index * 0.2}s` }}>
+                <div className="stat-icon">
+                  <stat.icon />
                 </div>
-                <div className={`faq-answer ${activeFAQ === index ? 'open' : ''}`}>
-                  {item.answer}
-                </div>
+                <div className="stat-number">{stat.number}</div>
+                <div className="stat-label">{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Success Pathways Cards */}
-      <section className="pathways">
+      {/* Pathways Section */}
+      <section className="pathways-section">
         <div className="container">
-          <h2 className="section-title">Choose Your Route</h2>
+          <div className="section-header">
+            <span className="section-badge">Choose Your Path</span>
+            <h2 className="section-title">How do you want to experience Japan?</h2>
+            <p className="section-subtitle">Every journey is unique. Find the path that matches your dreams.</p>
+          </div>
+
           <div className="pathways-grid">
-            <Link to="/classes" className="pathway-card" data-aos="fade-up" data-aos-delay="100">
-              <h3>I want to study in Japan</h3>
-              <p>Explore our language and academic programs.</p>
-            </Link>
-            <Link to="/visa" className="pathway-card" data-aos="fade-up" data-aos-delay="200">
-              <h3>I want to work in Japan</h3>
-              <p>Get expert visa and career support.</p>
-            </Link>
-            <Link to="/classes" className="pathway-card" data-aos="fade-up" data-aos-delay="300">
-              <h3>I want to learn Japanese</h3>
-              <p>Start with our beginner-friendly courses.</p>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section className="about">
-        <div className="container">
-          <div className="about-content">
-            <div className="about-text" data-aos="fade-right">
-              <h2>Why Choose Us?</h2>
-              <p>
-                We empower students and professionals with top-tier educational and visa services. Our expert team
-                ensures success with personalized Japanese training and comprehensive documentation support.
-              </p>
-              <div className="stats">
-                <div className="stat">
-                  <div className="stat-number">500+</div>
-                  <div className="stat-label">Students Helped</div>
+            {pathways.map((pathway, index) => (
+              <Link key={index} to={pathway.link} className="pathway-card">
+                <div className="pathway-icon">
+                  <pathway.icon />
                 </div>
-                <div className="stat">
-                  <div className="stat-number">95%</div>
-                  <div className="stat-label">Success Rate</div>
+                <h3>{pathway.title}</h3>
+                <p>{pathway.description}</p>
+                <div className="pathway-arrow">
+                  <FaArrowRight />
                 </div>
-                <div className="stat">
-                  <div className="stat-number">5+</div>
-                  <div className="stat-label">Years Experience</div>
-                </div>
-              </div>
-              <Link to="/success-stories" className="btn btn-outline">
-                See Success Stories
               </Link>
-            </div>
-            <div className="about-visual" data-aos="fade-left">
-              <img src={CityImage} alt="City view, Japan" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Meet Our Team Spotlight */}
-      <section className="team">
+      {/* Journey Timeline */}
+      <section className="journey-section">
         <div className="container">
-          <h2 className="section-title">Meet Our Team</h2>
-          <div className="team-grid">
-            {instructors.map((instructor, index) => (
-              <div key={index} className="team-card" data-aos="fade-up" data-aos-delay={index * 200}>
-                <img src={instructor.image} alt={instructor.name} className="team-image" />
-                <h3>{instructor.name}</h3>
-                <p className="team-role">{instructor.role}</p>
-                <p className="team-bio">{instructor.bio} Visit us to meet the team!</p>
+          <div className="section-header">
+            <span className="section-badge">Your Journey</span>
+            <h2 className="section-title">From consultation to success</h2>
+            <p className="section-subtitle">We guide you through every step of your Japan journey</p>
+          </div>
+
+          <div className="timeline">
+            {[
+              { step: "01", title: "Free Consultation", desc: "Visit our Chabahil office for personalized guidance" },
+              { step: "02", title: "Language Training", desc: "Master Japanese with our expert instructors" },
+              { step: "03", title: "Document Preparation", desc: "Complete all paperwork with our assistance" },
+              { step: "04", title: "Visa Application", desc: "Secure your visa with our proven process" },
+              { step: "05", title: "Japan Ready", desc: "Begin your new adventure with confidence" },
+            ].map((item, index) => (
+              <div key={index} className="timeline-item">
+                <div className="timeline-number">{item.step}</div>
+                <div className="timeline-content">
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Study in Japan Info Hub */}
-      <section className="info-hub">
+      {/* FAQ Section */}
+      <section className="faq-section">
         <div className="container">
-          <h2 className="section-title">Study in Japan Info Hub</h2>
-          <div className="info-grid">
-            <Link to="/blog/top-cities" className="info-card" data-aos="fade-up" data-aos-delay="100">
-              <h3>Top Cities for Students</h3>
-              <p>Discover the best study destinations.</p>
-            </Link>
-            <Link to="/blog/jlpt-n5" className="info-card" data-aos="fade-up" data-aos-delay="200">
-              <h3>What is JLPT N5?</h3>
-              <p>Learn why it’s your first step to Japan.</p>
-            </Link>
+          <div className="section-header">
+            <span className="section-badge">FAQ</span>
+            <h2 className="section-title">Common questions answered</h2>
+            <p className="section-subtitle">Get instant answers to your most pressing concerns</p>
+          </div>
+
+          <div className="faq-container">
+            {faqs.map((faq, index) => (
+              <div key={index} className={`faq-item ${activeFAQ === index ? "active" : ""}`}>
+                <button className="faq-question" onClick={() => toggleFAQ(index)}>
+                  <span>{faq.question}</span>
+                  <FaChevronDown className={`faq-icon ${activeFAQ === index ? "rotated" : ""}`} />
+                </button>
+                <div className="faq-answer">
+                  <p>{faq.answer}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Interactive Map with Office Location */}
-      <section className="map">
+      {/* CTA Section */}
+      <section className="cta-section">
         <div className="container">
-          <h2 className="section-title">Find Us</h2>
-          <div className="map-content">
-            <iframe
-              title="Kyushu Edu Consultancy Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.123456!2d85.323456!3d27.712345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDQyJzQ0LjgiTiA4NcKwMTknMzAuMiJF!5e0!3m2!1sen!2snp!4v1623456789!5m2!1sen!2snp"
-              width="100%"
-              height="300"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-            ></iframe>
-            <div className="map-directions">
-              <p>5 mins from Chabahil Chowk</p>
-              <p>Near XYZ Café – Visit today!</p>
+          <div className="cta-content">
+            <div className="cta-badge">
+              <span>Ready to start?</span>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Japan? Highlight Section */}
-      <section className="why-japan">
-        <div className="container">
-          <h2 className="section-title">Why Japan?</h2>
-          <div className="why-japan-grid">
-            <div className="why-japan-card" data-aos="fade-up" data-aos-delay="100">
-              <h3>Top 3 Safest Countries</h3>
-              <p>A secure place to study or work.</p>
-            </div>
-            <div className="why-japan-card" data-aos="fade-up" data-aos-delay="200">
-              <h3>10+ Tuition-Free Universities</h3>
-              <p>Affordable education awaits.</p>
-            </div>
-            <div className="why-japan-card" data-aos="fade-up" data-aos-delay="300">
-              <h3>300,000+ Job Opportunities</h3>
-              <p>Japan needs skilled workers like you!</p>
+            <h2>Your Japan journey begins today</h2>
+            <p>Join hundreds of successful students who trusted us with their dreams</p>
+            <div className="cta-buttons">
+              <Link to="/contact" className="btn btn-white">
+                Visit Our Office
+                <FaArrowRight />
+              </Link>
+              <Link to="/classes" className="btn btn-outline-white">
+                Explore Programs
+              </Link>
             </div>
           </div>
         </div>
@@ -285,45 +285,54 @@ const HomePage = () => {
       <footer className="footer">
         <div className="container">
           <div className="footer-content">
-            <div className="footer-section">
+            <div className="footer-brand">
               <h3>Kyushu Edu Consultancy</h3>
-              <p>Empowering your journey to Japan with expert solutions. Visit us in Chabahil!</p>
+              <p>Your trusted partner for Japan education and visa services in Nepal.</p>
               <div className="social-links">
-                <a href="https://www.facebook.com/kyushuedu/" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href="https://www.facebook.com/kyushuedu/" target="_blank" rel="noopener noreferrer">
                   <FaFacebookF />
                 </a>
-                <a href="mailto:kyushuedu@gmail.com" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href="mailto:kyushuedu@gmail.com" target="_blank" rel="noopener noreferrer">
                   <FaGoogle />
                 </a>
-                <a href="https://www.instagram.com/kyushuedu/?hl=en" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href="https://www.instagram.com/kyushuedu/?hl=en" target="_blank" rel="noopener noreferrer">
                   <FaInstagram />
                 </a>
               </div>
             </div>
-            <div className="footer-section">
-              <h3>Contact Us</h3>
-              <div className="contact-info">
-                <p>📧 kyushuedu@gmail.com</p>
-                <p>📞 +014581248</p>
-                <p>📍 Chabahil, Kathmandu, Nepal</p>
+
+            <div className="footer-contact">
+              <h4>Contact Info</h4>
+              <div className="contact-item">
+                <span>📧</span>
+                <span>kyushuedu@gmail.com</span>
+              </div>
+              <div className="contact-item">
+                <span>📞</span>
+                <span>+977-14581248</span>
+              </div>
+              <div className="contact-item">
+                <span>📍</span>
+                <span>Chabahil, Kathmandu</span>
               </div>
             </div>
-            <div className="footer-section">
-              <h3>Quick Links</h3>
-              <div className="footer-links">
-                <Link to="/privacy">Privacy Policy</Link>
-                <Link to="/terms">Terms of Service</Link>
-                <Link to="/contact">Contact Us</Link>
-              </div>
+
+            <div className="footer-links">
+              <h4>Quick Links</h4>
+              <Link to="/classes">Japanese Classes</Link>
+              <Link to="/visa">Visa Services</Link>
+              <Link to="/about">About Us</Link>
+              <Link to="/contact">Contact</Link>
             </div>
           </div>
+
           <div className="footer-bottom">
             <p>© 2025 Kyushu Edu Consultancy. All rights reserved.</p>
           </div>
         </div>
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage
