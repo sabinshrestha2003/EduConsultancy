@@ -12,20 +12,24 @@ import {
   FaPassport,
   FaUsers,
   FaChevronDown,
+  FaClock,
+  FaAward,
+  FaGlobe,
+  FaBookOpen,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaEnvelope,
 } from "react-icons/fa"
-import "../styles/HomePage.css"
-
-// Import images
-import CityImage from "../assets/city.jpg"
-import KyotoImage from "../assets/kyoto.jpg"
-import OsakaImage from "../assets/osaka.jpg"
-import TokyoImage from "../assets/tokyo.jpg"
-import CherryImage from "../assets/cherry.jpg"
-import NightCityImage from "../assets/nightcity.jpg"
-import StreetImage from "../assets/street.jpg"
+import "./HomePage.css"
 
 const HomePage = () => {
-  const images = [CityImage, KyotoImage, OsakaImage, TokyoImage, CherryImage, NightCityImage, StreetImage]
+  const images = [
+    "/placeholder.svg?height=800&width=1200&text=Tokyo+Skyline",
+    "/placeholder.svg?height=800&width=1200&text=Kyoto+Temple",
+    "/placeholder.svg?height=800&width=1200&text=Osaka+Castle",
+    "/placeholder.svg?height=800&width=1200&text=Cherry+Blossoms",
+    "/placeholder.svg?height=800&width=1200&text=Japanese+Street",
+  ]
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [activeFAQ, setActiveFAQ] = useState(null)
@@ -38,22 +42,9 @@ const HomePage = () => {
   }, [])
 
   useEffect(() => {
-    // Preload images
-    images.forEach((image) => {
-      const img = new Image()
-      img.src = image
-      img.onload = () => console.log(`Loaded: ${image}`)
-      img.onerror = () => console.error(`Failed to load: ${image}`)
-    })
-
-    const transition = () => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }
-
     const interval = setInterval(() => {
-      requestAnimationFrame(transition)
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
     }, 5000)
-
     return () => clearInterval(interval)
   }, [images.length])
 
@@ -63,8 +54,8 @@ const HomePage = () => {
 
   const stats = [
     { number: "500+", label: "Students Helped", icon: FaUsers },
-    { number: "95%", label: "Success Rate", icon: FaGraduationCap },
-    { number: "5+", label: "Years Experience", icon: FaPassport },
+    { number: "95%", label: "Success Rate", icon: FaAward },
+    { number: "5+", label: "Years Experience", icon: FaClock },
   ]
 
   const faqs = [
@@ -96,19 +87,30 @@ const HomePage = () => {
       description: "Academic programs and language courses",
       icon: FaGraduationCap,
       link: "/classes",
+      color: "blue",
     },
     {
       title: "Work in Japan",
       description: "Career opportunities and work visas",
       icon: FaPassport,
       link: "/visa",
+      color: "orange",
     },
     {
       title: "Learn Japanese",
       description: "Language mastery from N5 to N1",
-      icon: FaPlay,
+      icon: FaBookOpen,
       link: "/classes",
+      color: "purple",
     },
+  ]
+
+  const timeline = [
+    { step: "01", title: "Free Consultation", desc: "Visit our Chabahil office for personalized guidance" },
+    { step: "02", title: "Language Training", desc: "Master Japanese with our expert instructors" },
+    { step: "03", title: "Document Preparation", desc: "Complete all paperwork with our assistance" },
+    { step: "04", title: "Visa Application", desc: "Secure your visa with our proven process" },
+    { step: "05", title: "Japan Ready", desc: "Begin your new adventure with confidence" },
   ]
 
   return (
@@ -131,17 +133,21 @@ const HomePage = () => {
 
         <div className="hero-content">
           <div className="hero-badge">
-            <span>🇯🇵 Your Gateway to Japan</span>
+            <FaGlobe />
+            Your Gateway to Japan
           </div>
+
           <h1 className="hero-title">
             Master Japanese.
             <br />
             <span className="accent-text">Achieve Your Dreams.</span>
           </h1>
+
           <p className="hero-description">
             Expert language training and visa guidance in the heart of Kathmandu. Join 500+ successful students who
             trusted their Japan journey with us.
           </p>
+
           <div className="hero-buttons">
             <Link to="/classes" className="btn btn-primary">
               Start Your Journey
@@ -153,13 +159,6 @@ const HomePage = () => {
             </Link>
           </div>
         </div>
-
-        <div className="scroll-indicator">
-          <div className="scroll-mouse">
-            <div className="scroll-wheel"></div>
-          </div>
-          <span>Scroll to explore</span>
-        </div>
       </section>
 
       {/* Stats Section */}
@@ -167,7 +166,7 @@ const HomePage = () => {
         <div className="container">
           <div className="stats-grid">
             {stats.map((stat, index) => (
-              <div key={index} className="stat-card" style={{ animationDelay: `${index * 0.2}s` }}>
+              <div key={index} className="stat-card">
                 <div className="stat-icon">
                   <stat.icon />
                 </div>
@@ -190,7 +189,7 @@ const HomePage = () => {
 
           <div className="pathways-grid">
             {pathways.map((pathway, index) => (
-              <Link key={index} to={pathway.link} className="pathway-card">
+              <Link key={index} to={pathway.link} className={`pathway-card pathway-${pathway.color}`}>
                 <div className="pathway-icon">
                   <pathway.icon />
                 </div>
@@ -215,13 +214,7 @@ const HomePage = () => {
           </div>
 
           <div className="timeline">
-            {[
-              { step: "01", title: "Free Consultation", desc: "Visit our Chabahil office for personalized guidance" },
-              { step: "02", title: "Language Training", desc: "Master Japanese with our expert instructors" },
-              { step: "03", title: "Document Preparation", desc: "Complete all paperwork with our assistance" },
-              { step: "04", title: "Visa Application", desc: "Secure your visa with our proven process" },
-              { step: "05", title: "Japan Ready", desc: "Begin your new adventure with confidence" },
-            ].map((item, index) => (
+            {timeline.map((item, index) => (
               <div key={index} className="timeline-item">
                 <div className="timeline-number">{item.step}</div>
                 <div className="timeline-content">
@@ -263,19 +256,20 @@ const HomePage = () => {
       <section className="cta-section">
         <div className="container">
           <div className="cta-content">
-            <div className="cta-badge">
-              <span>Ready to start?</span>
-            </div>
-            <h2>Your Japan journey begins today</h2>
-            <p>Join hundreds of successful students who trusted us with their dreams</p>
+            <span className="cta-badge">Ready to Start?</span>
+            <h2>Begin Your Japan Journey Today</h2>
+            <p>
+              Join hundreds of successful students who trusted us with their dreams. Your adventure in Japan starts with
+              a single step.
+            </p>
             <div className="cta-buttons">
               <Link to="/contact" className="btn btn-white">
-                Visit Our Office
+                Schedule Consultation
                 <FaArrowRight />
               </Link>
-              <Link to="/classes" className="btn btn-outline-white">
-                Explore Programs
-              </Link>
+              <a href="tel:+977-14581248" className="btn btn-outline-white">
+                Call Now: +977-14581248
+              </a>
             </div>
           </div>
         </div>
@@ -304,15 +298,15 @@ const HomePage = () => {
             <div className="footer-contact">
               <h4>Contact Info</h4>
               <div className="contact-item">
-                <span>📧</span>
+                <FaEnvelope />
                 <span>kyushuedu@gmail.com</span>
               </div>
               <div className="contact-item">
-                <span>📞</span>
+                <FaPhone />
                 <span>+977-14581248</span>
               </div>
               <div className="contact-item">
-                <span>📍</span>
+                <FaMapMarkerAlt />
                 <span>Chabahil, Kathmandu</span>
               </div>
             </div>
