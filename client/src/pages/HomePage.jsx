@@ -12,25 +12,20 @@ import {
   FaPassport,
   FaUsers,
   FaChevronDown,
-  FaClock,
-  FaAward,
-  FaGlobe,
-  FaBookOpen,
-  FaPhone,
-  FaMapMarkerAlt,
-  FaEnvelope,
 } from "react-icons/fa"
-import "./HomePage.css"
+import "../styles/HomePage.css"
+
+// Import images
+import CityImage from "../assets/city.jpg"
+import KyotoImage from "../assets/kyoto.jpg"
+import OsakaImage from "../assets/osaka.jpg"
+import TokyoImage from "../assets/tokyo.jpg"
+import CherryImage from "../assets/cherry.jpg"
+import NightCityImage from "../assets/nightcity.jpg"
+import StreetImage from "../assets/street.jpg"
 
 const HomePage = () => {
-  const images = [
-    "/placeholder.svg?height=800&width=1200&text=Tokyo+Skyline",
-    "/placeholder.svg?height=800&width=1200&text=Kyoto+Temple",
-    "/placeholder.svg?height=800&width=1200&text=Osaka+Castle",
-    "/placeholder.svg?height=800&width=1200&text=Cherry+Blossoms",
-    "/placeholder.svg?height=800&width=1200&text=Japanese+Street",
-  ]
-
+  const images = [CityImage, KyotoImage, OsakaImage, TokyoImage, CherryImage, NightCityImage, StreetImage]
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [activeFAQ, setActiveFAQ] = useState(null)
   const [scrollY, setScrollY] = useState(0)
@@ -42,9 +37,22 @@ const HomePage = () => {
   }, [])
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    // Preload images
+    images.forEach((image) => {
+      const img = new Image()
+      img.src = image
+      img.onload = () => console.log(`Loaded: ${image}`)
+      img.onerror = () => console.error(`Failed to load: ${image}`)
+    })
+
+    const transition = () => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
+    }
+
+    const interval = setInterval(() => {
+      requestAnimationFrame(transition)
     }, 5000)
+
     return () => clearInterval(interval)
   }, [images.length])
 
@@ -54,8 +62,8 @@ const HomePage = () => {
 
   const stats = [
     { number: "500+", label: "Students Helped", icon: FaUsers },
-    { number: "95%", label: "Success Rate", icon: FaAward },
-    { number: "5+", label: "Years Experience", icon: FaClock },
+    { number: "95%", label: "Success Rate", icon: FaGraduationCap },
+    { number: "5+", label: "Years Experience", icon: FaPassport },
   ]
 
   const faqs = [
@@ -87,30 +95,19 @@ const HomePage = () => {
       description: "Academic programs and language courses",
       icon: FaGraduationCap,
       link: "/classes",
-      color: "blue",
     },
     {
       title: "Work in Japan",
       description: "Career opportunities and work visas",
       icon: FaPassport,
       link: "/visa",
-      color: "orange",
     },
     {
       title: "Learn Japanese",
       description: "Language mastery from N5 to N1",
-      icon: FaBookOpen,
+      icon: FaPlay,
       link: "/classes",
-      color: "purple",
     },
-  ]
-
-  const timeline = [
-    { step: "01", title: "Free Consultation", desc: "Visit our Chabahil office for personalized guidance" },
-    { step: "02", title: "Language Training", desc: "Master Japanese with our expert instructors" },
-    { step: "03", title: "Document Preparation", desc: "Complete all paperwork with our assistance" },
-    { step: "04", title: "Visa Application", desc: "Secure your visa with our proven process" },
-    { step: "05", title: "Japan Ready", desc: "Begin your new adventure with confidence" },
   ]
 
   return (
@@ -129,25 +126,33 @@ const HomePage = () => {
             />
           ))}
           <div className="hero-overlay" />
+          <div className="hero-particles">
+            {[...Array(25)].map((_, i) => (
+              <div
+                key={i}
+                className="particle"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 20}s`,
+                  animationDuration: `${15 + Math.random() * 10}s`,
+                }}
+              />
+            ))}
+          </div>
         </div>
-
         <div className="hero-content">
           <div className="hero-badge">
-            <FaGlobe />
-            Your Gateway to Japan
+            <span>🇯🇵 Your Gateway to Japan</span>
           </div>
-
           <h1 className="hero-title">
             Master Japanese.
             <br />
             <span className="accent-text">Achieve Your Dreams.</span>
           </h1>
-
           <p className="hero-description">
             Expert language training and visa guidance in the heart of Kathmandu. Join 500+ successful students who
             trusted their Japan journey with us.
           </p>
-
           <div className="hero-buttons">
             <Link to="/classes" className="btn btn-primary">
               Start Your Journey
@@ -166,7 +171,8 @@ const HomePage = () => {
         <div className="container">
           <div className="stats-grid">
             {stats.map((stat, index) => (
-              <div key={index} className="stat-card">
+              <div key={index} className="stat-card" style={{ animationDelay: `${index * 0.2}s` }}>
+                <div className="card-glow"></div>
                 <div className="stat-icon">
                   <stat.icon />
                 </div>
@@ -186,10 +192,10 @@ const HomePage = () => {
             <h2 className="section-title">How do you want to experience Japan?</h2>
             <p className="section-subtitle">Every journey is unique. Find the path that matches your dreams.</p>
           </div>
-
           <div className="pathways-grid">
             {pathways.map((pathway, index) => (
-              <Link key={index} to={pathway.link} className={`pathway-card pathway-${pathway.color}`}>
+              <Link key={index} to={pathway.link} className="pathway-card">
+                <div className="card-glow"></div>
                 <div className="pathway-icon">
                   <pathway.icon />
                 </div>
@@ -212,10 +218,16 @@ const HomePage = () => {
             <h2 className="section-title">From consultation to success</h2>
             <p className="section-subtitle">We guide you through every step of your Japan journey</p>
           </div>
-
           <div className="timeline">
-            {timeline.map((item, index) => (
+            {[
+              { step: "01", title: "Free Consultation", desc: "Visit our Chabahil office for personalized guidance" },
+              { step: "02", title: "Language Training", desc: "Master Japanese with our expert instructors" },
+              { step: "03", title: "Document Preparation", desc: "Complete all paperwork with our assistance" },
+              { step: "04", title: "Visa Application", desc: "Secure your visa with our proven process" },
+              { step: "05", title: "Japan Ready", desc: "Begin your new adventure with confidence" },
+            ].map((item, index) => (
               <div key={index} className="timeline-item">
+                <div className="card-glow"></div>
                 <div className="timeline-number">{item.step}</div>
                 <div className="timeline-content">
                   <h3>{item.title}</h3>
@@ -235,10 +247,10 @@ const HomePage = () => {
             <h2 className="section-title">Common questions answered</h2>
             <p className="section-subtitle">Get instant answers to your most pressing concerns</p>
           </div>
-
           <div className="faq-container">
             {faqs.map((faq, index) => (
               <div key={index} className={`faq-item ${activeFAQ === index ? "active" : ""}`}>
+                <div className="card-glow"></div>
                 <button className="faq-question" onClick={() => toggleFAQ(index)}>
                   <span>{faq.question}</span>
                   <FaChevronDown className={`faq-icon ${activeFAQ === index ? "rotated" : ""}`} />
@@ -256,20 +268,19 @@ const HomePage = () => {
       <section className="cta-section">
         <div className="container">
           <div className="cta-content">
-            <span className="cta-badge">Ready to Start?</span>
-            <h2>Begin Your Japan Journey Today</h2>
-            <p>
-              Join hundreds of successful students who trusted us with their dreams. Your adventure in Japan starts with
-              a single step.
-            </p>
+            <div className="cta-badge">
+              <span>Ready to start?</span>
+            </div>
+            <h2>Your Japan journey begins today</h2>
+            <p>Join hundreds of successful students who trusted us with their dreams</p>
             <div className="cta-buttons">
               <Link to="/contact" className="btn btn-white">
-                Schedule Consultation
+                Visit Our Office
                 <FaArrowRight />
               </Link>
-              <a href="tel:+977-14581248" className="btn btn-outline-white">
-                Call Now: +977-14581248
-              </a>
+              <Link to="/classes" className="btn btn-outline-white">
+                Explore Programs
+              </Link>
             </div>
           </div>
         </div>
@@ -294,23 +305,21 @@ const HomePage = () => {
                 </a>
               </div>
             </div>
-
             <div className="footer-contact">
               <h4>Contact Info</h4>
               <div className="contact-item">
-                <FaEnvelope />
+                <span>📧</span>
                 <span>kyushuedu@gmail.com</span>
               </div>
               <div className="contact-item">
-                <FaPhone />
+                <span>📞</span>
                 <span>+977-14581248</span>
               </div>
               <div className="contact-item">
-                <FaMapMarkerAlt />
+                <span>📍</span>
                 <span>Chabahil, Kathmandu</span>
               </div>
             </div>
-
             <div className="footer-links">
               <h4>Quick Links</h4>
               <Link to="/classes">Japanese Classes</Link>
@@ -319,7 +328,6 @@ const HomePage = () => {
               <Link to="/contact">Contact</Link>
             </div>
           </div>
-
           <div className="footer-bottom">
             <p>© 2025 Kyushu Edu Consultancy. All rights reserved.</p>
           </div>

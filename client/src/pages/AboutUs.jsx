@@ -1,4 +1,5 @@
 "use client"
+
 import { useState, useEffect } from "react"
 import "../styles/AboutUs.css"
 import { Link } from "react-router-dom"
@@ -108,13 +109,25 @@ const AboutUs = () => {
   return (
     <div className="about-page">
       {/* Hero Section */}
-      <section className="hero">
+      <section className="hero" style={{ height: "70vh" }}>
         <div className="hero-background">
-          <div className="hero-particles"></div>
+          <div className="hero-particles">
+            {[...Array(25)].map((_, i) => (
+              <div
+                key={i}
+                className="particle"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 20}s`,
+                  animationDuration: `${15 + Math.random() * 10}s`,
+                }}
+              />
+            ))}
+          </div>
           <div className="hero-overlay" />
         </div>
         <div className="hero-content">
-          <div className="hero-badge" data-animate="hero-badge">
+          <div className="hero-badge" data-animate="hero-badge" style={{ marginBottom: "2rem" }}>
             <span>🏢 About Kyushu Edu</span>
           </div>
           <h1 className="hero-title" data-animate="hero-title">
@@ -122,7 +135,7 @@ const AboutUs = () => {
             <br />
             <span className="accent-text">Story</span>
           </h1>
-          <p className="hero-description" data-animate="hero-desc">
+          <p className="hero-description" data-animate="hero-desc" style={{ marginBottom: "2.5rem" }}>
             Empowering dreams and connecting futures with Japan through expert guidance, personalized support, and
             unwavering commitment to your success.
           </p>
@@ -161,6 +174,7 @@ const AboutUs = () => {
                 </div>
                 <div className="achievement-number">{achievement.number}</div>
                 <div className="achievement-label">{achievement.label}</div>
+                <div className="achievement-glow"></div>
               </div>
             ))}
           </div>
@@ -181,7 +195,6 @@ const AboutUs = () => {
               Discover what drives us and how we've become Nepal's trusted partner for Japan education
             </p>
           </div>
-
           <div className="story-grid">
             <div
               className={`story-card mission-card ${visibleElements.has("mission") ? "animate" : ""}`}
@@ -198,7 +211,6 @@ const AboutUs = () => {
               </p>
               <div className="card-glow"></div>
             </div>
-
             <div
               className={`story-card vision-card ${visibleElements.has("vision") ? "animate" : ""}`}
               data-animate="vision"
@@ -214,7 +226,6 @@ const AboutUs = () => {
               </p>
               <div className="card-glow"></div>
             </div>
-
             <div
               className={`story-card journey-card ${visibleElements.has("journey") ? "animate" : ""}`}
               data-animate="journey"
@@ -230,7 +241,6 @@ const AboutUs = () => {
               </p>
               <div className="card-glow"></div>
             </div>
-
             <div
               className={`story-card choose-card ${visibleElements.has("choose") ? "animate" : ""}`}
               data-animate="choose"
@@ -268,7 +278,6 @@ const AboutUs = () => {
               Key moments that shaped our path to becoming Nepal's leading Japan education consultancy
             </p>
           </div>
-
           <div className="timeline-container">
             {milestones.map((milestone, index) => (
               <div
@@ -282,6 +291,7 @@ const AboutUs = () => {
                   <p>{milestone.description}</p>
                 </div>
                 <div className="milestone-connector"></div>
+                <div className="milestone-glow"></div>
               </div>
             ))}
           </div>
@@ -302,7 +312,6 @@ const AboutUs = () => {
               Visionary leadership driving excellence in education consultancy
             </p>
           </div>
-
           <div className="director-content">
             <div
               className={`director-image ${visibleElements.has("director-img") ? "animate" : ""}`}
@@ -319,7 +328,6 @@ const AboutUs = () => {
                 <div className="image-glow"></div>
               </div>
             </div>
-
             <div
               className={`director-info ${visibleElements.has("director-info") ? "animate" : ""}`}
               data-animate="director-info"
@@ -358,7 +366,6 @@ const AboutUs = () => {
               The principles that guide everything we do and shape our commitment to excellence
             </p>
           </div>
-
           <div className="values-grid">
             {values.map((value, index) => (
               <div
@@ -383,6 +390,9 @@ const AboutUs = () => {
 
       {/* CTA Section */}
       <section className="cta-section">
+        <div className="cta-background">
+          <div className="cta-pattern"></div>
+        </div>
         <div className="container">
           <div className={`cta-content ${visibleElements.has("cta") ? "animate" : ""}`} data-animate="cta">
             <div className="cta-badge">
@@ -424,7 +434,6 @@ const AboutUs = () => {
                 </a>
               </div>
             </div>
-
             <div className="footer-contact">
               <h4>Contact Info</h4>
               <div className="contact-item">
@@ -440,7 +449,6 @@ const AboutUs = () => {
                 <span>Chabahil, Kathmandu</span>
               </div>
             </div>
-
             <div className="footer-links">
               <h4>Quick Links</h4>
               <Link to="/classes">Japanese Classes</Link>
@@ -449,7 +457,6 @@ const AboutUs = () => {
               <Link to="/contact">Contact</Link>
             </div>
           </div>
-
           <div className="footer-bottom">
             <p>© 2025 Kyushu Edu Consultancy. All rights reserved.</p>
           </div>
