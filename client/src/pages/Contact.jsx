@@ -80,90 +80,73 @@ const Contact = () => {
   }
 
   return (
-    <div className="homepage">
+    <div className="con-page">
       {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-background">
-          <div className="hero-particles"></div>
-          <div className="hero-overlay" />
-        </div>
-        <div className="hero-content">
-          <div className="hero-badge">
+      <section className="con-hero">
+        <div className="con-container con-hero-content">
+          <div className="con-hero-badge">
             <span>📞 Contact Us</span>
           </div>
-          <h1 className="hero-title">
+          <h1 className="con-hero-title">
             Get In
             <br />
-            <span className="accent-text">Touch</span>
+            <span className="con-accent-text">Touch</span>
           </h1>
-          <p className="hero-description">
+          <p className="con-hero-description">
             Get started by filling out the form below or visit our Chabahil office for personalized guidance on your
             journey to Japan.
           </p>
-          <div className="hero-buttons">
-            <a href="#contact-form" className="btn btn-primary">
+          <div className="con-hero-buttons">
+            <a href="#contact-form" className="con-btn con-btn-primary">
               Contact Form
               <FaArrowRight />
             </a>
-            <a href="#office-info" className="btn btn-glass">
+            <a href="#office-info" className="con-btn con-btn-secondary">
               Visit Office
               <FaUsers />
             </a>
           </div>
         </div>
-        <div className="floating-elements">
-          <div className="floating-element element-1">📞</div>
-          <div className="floating-element element-2">📧</div>
-          <div className="floating-element element-3">📍</div>
-          <div className="floating-element element-4">🏢</div>
-        </div>
       </section>
 
       {/* Contact Content */}
-      <section className="about" id="contact-form">
-        <div className="container">
-          <div className="about-content" style={{ flexDirection: "column", gap: "3rem" }}>
-            <div className="about-text" data-aos="fade-up">
+      <section className="con-contact" id="contact-form">
+        <div className="con-container">
+          <div className="con-contact-content">
+            <div className="con-contact-text">
               <h2>Contact Form</h2>
               <p>
                 Submit your details to get in touch, or visit our Chabahil office for immediate support with your
                 inquiries.
               </p>
-              <form
-                onSubmit={handleSubmit}
-                style={{ display: "flex", flexDirection: "column", gap: "1rem", maxWidth: "500px" }}
-              >
+              <form onSubmit={handleSubmit}>
                 <input
                   type="text"
                   name="name"
                   placeholder="Your Full Name"
                   value={formData.name}
                   onChange={handleChange}
-                  style={{ padding: "0.5rem", border: "1px solid var(--light-gray)", borderRadius: "5px" }}
                 />
-                {errors.name && <p style={{ color: "red", fontSize: "0.8rem" }}>{errors.name}</p>}
+                {errors.name && <p className="con-error">{errors.name}</p>}
                 <input
                   type="email"
                   name="email"
                   placeholder="Your Email Address"
                   value={formData.email}
                   onChange={handleChange}
-                  style={{ padding: "0.5rem", border: "1px solid var(--light-gray)", borderRadius: "5px" }}
                 />
-                {errors.email && <p style={{ color: "red", fontSize: "0.8rem" }}>{errors.email}</p>}
+                {errors.email && <p className="con-error">{errors.email}</p>}
                 <textarea
                   name="message"
                   placeholder="Your Message or Inquiry"
                   value={formData.message}
                   onChange={handleChange}
                   rows="5"
-                  style={{ padding: "0.5rem", border: "1px solid var(--light-gray)", borderRadius: "5px" }}
                 />
-                {errors.message && <p style={{ color: "red", fontSize: "0.8rem" }}>{errors.message}</p>}
+                {errors.message && <p className="con-error">{errors.message}</p>}
                 <button
                   type="submit"
-                  className="btn btn-primary"
-                  style={{ width: "fit-content", alignSelf: "flex-start", padding: "0.75rem 1.5rem" }}
+                  className="con-btn con-btn-primary"
                   disabled={
                     Object.values(errors).some((error) => error) ||
                     !Object.values(formData).every((value) => value.trim())
@@ -172,20 +155,20 @@ const Contact = () => {
                   Submit Inquiry
                 </button>
                 {submitMessage && (
-                  <p style={{ marginTop: "1rem", color: submitMessage.includes("Error") ? "red" : "green" }}>
+                  <p className={submitMessage.includes("Error") ? "con-error" : "con-success"}>
                     {submitMessage}
                   </p>
                 )}
               </form>
             </div>
 
-            <div className="about-text" id="office-info" data-aos="fade-up" data-aos-delay="200">
+            <div className="con-contact-text" id="office-info">
               <h2>Visit Our Office</h2>
               <p>
                 We encourage all students to visit our Chabahil office for detailed consultations, document reviews, and
                 personalized advice.
               </p>
-              <ul style={{ listStyle: "none", padding: 0 }}>
+              <ul>
                 <li>
                   📍 <strong>Location:</strong> Chabahil, Kathmandu, Nepal (5 minutes from Chabahil Chowk)
                 </li>
@@ -200,15 +183,15 @@ const Contact = () => {
                   💡 <strong>What to Expect:</strong> Meet our team, explore our facilities, and get tailored support
                 </li>
               </ul>
-              <Link to="/location" className="btn btn-primary" style={{ marginTop: "1rem" }}>
+              <Link to="/location" className="con-btn con-btn-primary">
                 Get Directions
               </Link>
             </div>
 
-            <div className="about-text" data-aos="fade-up" data-aos-delay="400">
+            <div className="con-contact-text">
               <h2>Additional Contact Options</h2>
               <p>For urgent inquiries, feel free to reach out, but we recommend visiting for the best experience.</p>
-              <ul style={{ listStyle: "none", padding: 0 }}>
+              <ul>
                 <li>
                   📧 <strong>Email:</strong> kyushuedu@gmail.com
                 </li>
@@ -216,23 +199,28 @@ const Contact = () => {
                   📞 <strong>Phone:</strong> +014581248 (Available during office hours)
                 </li>
               </ul>
-              <div className="social-links" style={{ marginTop: "1rem" }}>
+              <div className="con-social-links">
                 <a
                   href="https://www.facebook.com/kyushuedu/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="social-link"
+                  className="con-social-link"
                 >
                   <FaFacebookF />
                 </a>
-                <a href="mailto:kyushuedu@gmail.com" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a
+                  href="mailto:kyushuedu@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="con-social-link"
+                >
                   <FaGoogle />
                 </a>
                 <a
                   href="https://www.instagram.com/kyushuedu/?hl=en"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="social-link"
+                  className="con-social-link"
                 >
                   <FaInstagram />
                 </a>
@@ -243,55 +231,57 @@ const Contact = () => {
       </section>
 
       {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
+      <footer className="con-footer">
+        <div className="con-container">
+          <div className="con-footer-content">
+            <div className="con-footer-section">
               <h3>Kyushu Edu Consultancy</h3>
               <p>Empowering your journey to Japan with expert solutions. Visit us in Chabahil!</p>
-              <div className="social-links">
+              <div className="con-social-links">
                 <a
                   href="https://www.facebook.com/kyushuedu/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="social-link"
+                  className="con-social-link"
                 >
                   <FaFacebookF />
                 </a>
-                <a href="mailto:kyushuedu@gmail.com" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a
+                  href="mailto:kyushuedu@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="con-social-link"
+                >
                   <FaGoogle />
                 </a>
                 <a
                   href="https://www.instagram.com/kyushuedu/?hl=en"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="social-link"
+                  className="con-social-link"
                 >
                   <FaInstagram />
                 </a>
               </div>
             </div>
-
-            <div className="footer-section">
+            <div className="con-footer-section">
               <h3>Contact Us</h3>
-              <div className="contact-info">
+              <div className="con-contact-info">
                 <p>📧 kyushuedu@gmail.com</p>
                 <p>📞 +014581248</p>
                 <p>📍 Chabahil, Kathmandu, Nepal</p>
               </div>
             </div>
-
-            <div className="footer-section">
+            <div className="con-footer-section">
               <h3>Quick Links</h3>
-              <div className="footer-links">
+              <div className="con-footer-links">
                 <Link to="/privacy">Privacy Policy</Link>
                 <Link to="/terms">Terms of Service</Link>
                 <Link to="/contact">Contact Us</Link>
               </div>
             </div>
           </div>
-
-          <div className="footer-bottom">
+          <div className="con-footer-bottom">
             <p>© 2025 Kyushu Edu Consultancy. All rights reserved.</p>
           </div>
         </div>
