@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/HomePage.css';
+import '../styles/Blog.css';
 import { Link, useParams } from 'react-router-dom';
 import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa';
 
@@ -55,57 +55,60 @@ const Blog = () => {
   const isArticleView = !!slug;
 
   return (
-    <div className="homepage">
+    <div className="blog-page">
       {/* Blog Header */}
-      <section className="hero" style={{ minHeight: '50vh', background: 'linear-gradient(120deg, var(--primary-blue) 0%, var(--white) 70%)' }}>
-        <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="hero-title" style={{ color: 'var(--primary-blue)' }}>
-              {isArticleView ? article.title : 'Blog'}
-            </h1>
-            <p className="hero-description" style={{ color: 'var(--dark-gray)', maxWidth: '800px', margin: '0 auto' }}>
-              {isArticleView
-                ? 'Dive into this article for valuable insights on your journey to Japan.'
-                : 'Explore helpful articles to guide your journey to Japan. Visit our Chabahil office for expert advice!'}
-            </p>
+      <section className="blog-hero">
+        <div className="blog-container blog-hero-content">
+          <div className="blog-hero-badge">
+            <span>📝 {isArticleView ? article.title : 'Blog'}</span>
           </div>
+          <h1 className="blog-hero-title">
+            {isArticleView ? article.title : 'Blog'}
+          </h1>
+          <p className="blog-hero-description">
+            {isArticleView
+              ? 'Dive into this article for valuable insights on your journey to Japan.'
+              : 'Explore helpful articles to guide your journey to Japan. Visit our Chabahil office for expert advice!'}
+          </p>
         </div>
       </section>
 
       {/* Blog Content */}
-      <section className="about">
-        <div className="container">
-          <div className="about-content" style={{ flexDirection: 'column', gap: '3rem' }}>
+      <section className="blog-content">
+        <div className="blog-container">
+          <div className="blog-content-sections">
             {!isArticleView ? (
               <>
-                <div className="about-text" data-aos="fade-up">
+                <div className="blog-section">
                   <h2>Latest Articles</h2>
                   <p>
                     Stay informed with our latest tips and insights on studying and working in Japan.
                   </p>
                 </div>
-                <div className="services-grid">
+                <div className="blog-articles-grid">
                   {articles.map((article, index) => (
-                    <div key={index} className="service-card" data-aos="fade-up" data-aos-delay={index * 200}>
-                      <h3>{article.title}</h3>
-                      <p className="team-bio">{article.excerpt}</p>
-                      <Link to={`/blog/${article.slug}`} className="service-link">Read More <span className="arrow">→</span></Link>
+                    <div key={index} className="blog-article-card">
+                      <h3 className="blog-article-title">{article.title}</h3>
+                      <p className="blog-article-excerpt">{article.excerpt}</p>
+                      <Link to={`/blog/${article.slug}`} className="blog-article-link">
+                        Read More <span className="blog-arrow">→</span>
+                      </Link>
                     </div>
                   ))}
                 </div>
               </>
             ) : (
-              <div className="about-text" data-aos="fade-up">
+              <div className="blog-section">
                 {article.content}
-                <Link to="/blog" className="btn btn-outline" style={{ marginTop: '1rem' }}>
+                <Link to="/blog" className="blog-btn blog-btn-secondary">
                   Back to All Articles
                 </Link>
               </div>
             )}
-            <div className="about-text" data-aos="fade-up" data-aos-delay="400">
+            <div className="blog-section">
               <h2>Get Personalized Guidance</h2>
               <p>Have questions? Contact us or visit our Chabahil office for tailored support.</p>
-              <Link to="/contact" className="btn btn-primary" style={{ marginTop: '1rem' }}>
+              <Link to="/contact" className="blog-btn blog-btn-primary">
                 Contact Us
               </Link>
             </div>
@@ -114,42 +117,42 @@ const Blog = () => {
       </section>
 
       {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
+      <footer className="blog-footer">
+        <div className="blog-container">
+          <div className="blog-footer-content">
+            <div className="blog-footer-section">
               <h3>Kyushu Edu Consultancy</h3>
               <p>Empowering your journey to Japan with expert solutions. Visit us in Chabahil!</p>
-              <div className="social-links">
-                <a href="https://www.facebook.com/kyushuedu/" target="_blank" rel="noopener noreferrer" className="social-link">
+              <div className="blog-social-links">
+                <a href="https://www.facebook.com/kyushuedu/" target="_blank" rel="noopener noreferrer" className="blog-social-link">
                   <FaFacebookF />
                 </a>
-                <a href="mailto:kyushuedu@gmail.com" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href="mailto:kyushuedu@gmail.com" target="_blank" rel="noopener noreferrer" className="blog-social-link">
                   <FaGoogle />
                 </a>
-                <a href="https://www.instagram.com/kyushuedu/?hl=en" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href="https://www.instagram.com/kyushuedu/?hl=en" target="_blank" rel="noopener noreferrer" className="blog-social-link">
                   <FaInstagram />
                 </a>
               </div>
             </div>
-            <div className="footer-section">
+            <div className="blog-footer-section">
               <h3>Contact Us</h3>
-              <div className="contact-info">
+              <div className="blog-contact-info">
                 <p>📧 kyushuedu@gmail.com</p>
                 <p>📞 +014581248</p>
                 <p>📍 Chabahil, Kathmandu, Nepal</p>
               </div>
             </div>
-            <div className="footer-section">
+            <div className="blog-footer-section">
               <h3>Quick Links</h3>
-              <div className="footer-links">
+              <div className="blog-footer-links">
                 <Link to="/privacy">Privacy Policy</Link>
                 <Link to="/terms">Terms of Service</Link>
                 <Link to="/contact">Contact Us</Link>
               </div>
             </div>
           </div>
-          <div className="footer-bottom">
+          <div className="blog-footer-bottom">
             <p>© 2025 Kyushu Edu Consultancy. All rights reserved.</p>
           </div>
         </div>
