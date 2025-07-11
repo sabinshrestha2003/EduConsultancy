@@ -28,13 +28,6 @@ const HomePage = () => {
   const images = [CityImage, KyotoImage, OsakaImage, TokyoImage, CherryImage, NightCityImage, StreetImage]
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [activeFAQ, setActiveFAQ] = useState(null)
-  const [scrollY, setScrollY] = useState(0)
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
 
   useEffect(() => {
     // Preload images
@@ -51,7 +44,7 @@ const HomePage = () => {
 
     const interval = setInterval(() => {
       requestAnimationFrame(transition)
-    }, 5000)
+    }, 4000)
 
     return () => clearInterval(interval)
   }, [images.length])
@@ -111,55 +104,34 @@ const HomePage = () => {
   ]
 
   return (
-    <div className="homepage">
+    <div className="kec-homepage">
       {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-background">
+      <section className="kec-hero">
+        <div className="kec-hero-slideshow">
           {images.map((image, index) => (
             <div
               key={index}
-              className={`hero-slide ${index === currentImageIndex ? "active" : ""}`}
-              style={{
-                backgroundImage: `url(${image})`,
-                transform: `translateY(${scrollY * 0.3}px)`,
-              }}
+              className={`kec-hero-slide ${index === currentImageIndex ? "kec-active" : ""}`}
+              style={{ backgroundImage: `url(${image})` }}
             />
           ))}
-          <div className="hero-overlay" />
-          <div className="hero-particles">
-            {[...Array(25)].map((_, i) => (
-              <div
-                key={i}
-                className="particle"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 20}s`,
-                  animationDuration: `${15 + Math.random() * 10}s`,
-                }}
-              />
-            ))}
-          </div>
+          <div className="kec-hero-overlay" />
         </div>
-        <div className="hero-content">
-          <div className="hero-badge">
-            <span>🇯🇵 Your Gateway to Japan</span>
-          </div>
-          <h1 className="hero-title">
+        <div className="kec-container kec-hero-content">
+          <h1 className="kec-hero-title">
             Master Japanese.
             <br />
-            <span className="accent-text">Achieve Your Dreams.</span>
+            <span className="kec-accent-text">Achieve Your Dreams.</span>
           </h1>
-          <p className="hero-description">
-            Expert language training and visa guidance in the heart of Kathmandu. Join 500+ successful students who
-            trusted their Japan journey with us.
+          <p className="kec-hero-description">
+            Expert language training and visa guidance in Kathmandu. Join 500+ successful students on their Japan journey.
           </p>
-          <div className="hero-buttons">
-            <Link to="/classes" className="btn btn-primary">
+          <div className="kec-hero-buttons">
+            <Link to="/classes" className="kec-btn kec-btn-primary">
               Start Your Journey
               <FaArrowRight />
             </Link>
-            <Link to="/contact" className="btn btn-glass">
-              <FaPlay />
+            <Link to="/contact" className="kec-btn kec-btn-secondary">
               Visit Our Office
             </Link>
           </div>
@@ -167,17 +139,16 @@ const HomePage = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="stats-section">
-        <div className="container">
-          <div className="stats-grid">
+      <section className="kec-stats-section">
+        <div className="kec-container">
+          <div className="kec-stats-grid">
             {stats.map((stat, index) => (
-              <div key={index} className="stat-card" style={{ animationDelay: `${index * 0.2}s` }}>
-                <div className="card-glow"></div>
-                <div className="stat-icon">
+              <div key={index} className="kec-stat-card">
+                <div className="kec-stat-icon">
                   <stat.icon />
                 </div>
-                <div className="stat-number">{stat.number}</div>
-                <div className="stat-label">{stat.label}</div>
+                <div className="kec-stat-number">{stat.number}</div>
+                <div className="kec-stat-label">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -185,23 +156,21 @@ const HomePage = () => {
       </section>
 
       {/* Pathways Section */}
-      <section className="pathways-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-badge">Choose Your Path</span>
-            <h2 className="section-title">How do you want to experience Japan?</h2>
-            <p className="section-subtitle">Every journey is unique. Find the path that matches your dreams.</p>
+      <section className="kec-pathways-section">
+        <div className="kec-container">
+          <div className="kec-section-header">
+            <h2 className="kec-section-title">Choose Your Path</h2>
+            <p className="kec-section-subtitle">Find the journey that matches your dreams.</p>
           </div>
-          <div className="pathways-grid">
+          <div className="kec-pathways-grid">
             {pathways.map((pathway, index) => (
-              <Link key={index} to={pathway.link} className="pathway-card">
-                <div className="card-glow"></div>
-                <div className="pathway-icon">
+              <Link key={index} to={pathway.link} className="kec-pathway-card">
+                <div className="kec-pathway-icon">
                   <pathway.icon />
                 </div>
                 <h3>{pathway.title}</h3>
                 <p>{pathway.description}</p>
-                <div className="pathway-arrow">
+                <div className="kec-pathway-arrow">
                   <FaArrowRight />
                 </div>
               </Link>
@@ -211,14 +180,13 @@ const HomePage = () => {
       </section>
 
       {/* Journey Timeline */}
-      <section className="journey-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-badge">Your Journey</span>
-            <h2 className="section-title">From consultation to success</h2>
-            <p className="section-subtitle">We guide you through every step of your Japan journey</p>
+      <section className="kec-journey-section">
+        <div className="kec-container">
+          <div className="kec-section-header">
+            <h2 className="kec-section-title">Your Journey</h2>
+            <p className="kec-section-subtitle">We guide you every step to Japan.</p>
           </div>
-          <div className="timeline">
+          <div className="kec-timeline">
             {[
               { step: "01", title: "Free Consultation", desc: "Visit our Chabahil office for personalized guidance" },
               { step: "02", title: "Language Training", desc: "Master Japanese with our expert instructors" },
@@ -226,10 +194,9 @@ const HomePage = () => {
               { step: "04", title: "Visa Application", desc: "Secure your visa with our proven process" },
               { step: "05", title: "Japan Ready", desc: "Begin your new adventure with confidence" },
             ].map((item, index) => (
-              <div key={index} className="timeline-item">
-                <div className="card-glow"></div>
-                <div className="timeline-number">{item.step}</div>
-                <div className="timeline-content">
+              <div key={index} className="kec-timeline-item">
+                <div className="kec-timeline-number">{item.step}</div>
+                <div className="kec-timeline-content">
                   <h3>{item.title}</h3>
                   <p>{item.desc}</p>
                 </div>
@@ -240,22 +207,20 @@ const HomePage = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="faq-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-badge">FAQ</span>
-            <h2 className="section-title">Common questions answered</h2>
-            <p className="section-subtitle">Get instant answers to your most pressing concerns</p>
+      <section className="kec-faq-section">
+        <div className="kec-container">
+          <div className="kec-section-header">
+            <h2 className="kec-section-title">Common Questions</h2>
+            <p className="kec-section-subtitle">Answers to your most pressing concerns.</p>
           </div>
-          <div className="faq-container">
+          <div className="kec-faq-container">
             {faqs.map((faq, index) => (
-              <div key={index} className={`faq-item ${activeFAQ === index ? "active" : ""}`}>
-                <div className="card-glow"></div>
-                <button className="faq-question" onClick={() => toggleFAQ(index)}>
+              <div key={index} className={`kec-faq-item ${activeFAQ === index ? "kec-active" : ""}`}>
+                <button className="kec-faq-question" onClick={() => toggleFAQ(index)}>
                   <span>{faq.question}</span>
-                  <FaChevronDown className={`faq-icon ${activeFAQ === index ? "rotated" : ""}`} />
+                  <FaChevronDown className={`kec-faq-icon ${activeFAQ === index ? "kec-rotated" : ""}`} />
                 </button>
-                <div className="faq-answer">
+                <div className="kec-faq-answer">
                   <p>{faq.answer}</p>
                 </div>
               </div>
@@ -265,13 +230,13 @@ const HomePage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-brand">
+      <footer className="kec-footer">
+        <div className="kec-container">
+          <div className="kec-footer-content">
+            <div className="kec-footer-brand">
               <h3>Kyushu Edu Consultancy</h3>
               <p>Your trusted partner for Japan education and visa services in Nepal.</p>
-              <div className="social-links">
+              <div className="kec-social-links">
                 <a href="https://www.facebook.com/kyushuedu/" target="_blank" rel="noopener noreferrer">
                   <FaFacebookF />
                 </a>
@@ -283,22 +248,22 @@ const HomePage = () => {
                 </a>
               </div>
             </div>
-            <div className="footer-contact">
+            <div className="kec-footer-contact">
               <h4>Contact Info</h4>
-              <div className="contact-item">
+              <div className="kec-contact-item">
                 <span>📧</span>
                 <span>kyushuedu@gmail.com</span>
               </div>
-              <div className="contact-item">
+              <div className="kec-contact-item">
                 <span>📞</span>
                 <span>+977-14581248</span>
               </div>
-              <div className="contact-item">
+              <div className="kec-contact-item">
                 <span>📍</span>
                 <span>Chabahil, Kathmandu</span>
               </div>
             </div>
-            <div className="footer-links">
+            <div className="kec-footer-links">
               <h4>Quick Links</h4>
               <Link to="/classes">Japanese Classes</Link>
               <Link to="/visa">Visa Services</Link>
@@ -306,7 +271,7 @@ const HomePage = () => {
               <Link to="/contact">Contact</Link>
             </div>
           </div>
-          <div className="footer-bottom">
+          <div className="kec-footer-bottom">
             <p>© 2025 Kyushu Edu Consultancy. All rights reserved.</p>
           </div>
         </div>
