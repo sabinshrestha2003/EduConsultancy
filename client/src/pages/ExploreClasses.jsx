@@ -1,6 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
-import "../styles/ExploreClasses.css"
+
 import { Link } from "react-router-dom"
 import {
   FaFacebookF,
@@ -16,35 +15,9 @@ import {
   FaChalkboardTeacher,
   FaAward,
 } from "react-icons/fa"
+import "../styles/ExploreClasses.css"
 
 const ExploreClasses = () => {
-  const [scrollY, setScrollY] = useState(0)
-  const [visibleElements, setVisibleElements] = useState(new Set())
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleElements((prev) => new Set([...prev, entry.target.dataset.animate]))
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
-    )
-
-    const elements = document.querySelectorAll("[data-animate]")
-    elements.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [])
-
   const classLevels = [
     {
       icon: FaGraduationCap,
@@ -107,97 +80,76 @@ const ExploreClasses = () => {
   ]
 
   return (
-    <div className="explore-classes-page">
+    <div className="exp-page">
       {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-background">
-          <div className="hero-particles"></div>
-          <div className="hero-overlay" />
-        </div>
-        <div className="hero-content">
-          <div className="hero-badge" data-animate="hero-badge">
+      <section className="exp-hero">
+        <div className="exp-container exp-hero-content">
+          <div className="exp-hero-badge">
             <span>🎌 Japanese Classes</span>
           </div>
-          <h1 className="hero-title" data-animate="hero-title">
+          <h1 className="exp-hero-title">
             Explore Our
             <br />
-            <span className="accent-text">Classes</span>
+            <span className="exp-accent-text">Classes</span>
           </h1>
-          <p className="hero-description" data-animate="hero-desc">
+          <p className="exp-hero-description">
             Discover our tailored Japanese language courses designed for all skill levels. From beginner to advanced,
             we'll guide you on your journey to fluency.
           </p>
-          <div className="hero-buttons" data-animate="hero-buttons">
-            <Link to="/contact" className="btn btn-primary">
+          <div className="exp-hero-buttons">
+            <Link to="/contact" className="exp-btn exp-btn-primary">
               Get Started
               <FaArrowRight />
             </Link>
-            <Link to="#classes" className="btn btn-glass">
+            <Link to="#classes" className="exp-btn exp-btn-secondary">
               View Classes
               <FaBook />
             </Link>
           </div>
         </div>
-        <div className="floating-elements">
-          <div className="floating-element element-1">🎌</div>
-          <div className="floating-element element-2">📚</div>
-          <div className="floating-element element-3">✏️</div>
-          <div className="floating-element element-4">🌸</div>
-        </div>
       </section>
 
       {/* Classes Section */}
-      <section className="classes-section" id="classes">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-badge" data-animate="classes-badge">
-              Our Programs
-            </span>
-            <h2 className="section-title" data-animate="classes-title">
-              Choose Your Learning Path
-            </h2>
-            <p className="section-subtitle" data-animate="classes-subtitle">
+      <section className="exp-classes-section" id="classes">
+        <div className="exp-container">
+          <div className="exp-section-header">
+            <span className="exp-section-badge">Our Programs</span>
+            <h2 className="exp-section-title">Choose Your Learning Path</h2>
+            <p className="exp-section-subtitle">
               From absolute beginner to advanced fluency, we have the perfect course for your Japanese learning journey
             </p>
           </div>
-
-          <div className="classes-grid">
+          <div className="exp-classes-grid">
             {classLevels.map((classLevel, index) => (
-              <div
-                key={index}
-                className={`class-card ${visibleElements.has(`class-${index}`) ? "animate" : ""}`}
-                data-animate={`class-${index}`}
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <div className="class-header">
-                  <div className="class-icon">
+              <div key={index} className="exp-class-card">
+                <div className="exp-class-header">
+                  <div className="exp-class-icon">
                     <classLevel.icon />
                   </div>
-                  <div className="class-stats">
-                    <div className="stat">
-                      <span className="stat-number">{classLevel.students}</span>
-                      <span className="stat-label">Students</span>
+                  <div className="exp-class-stats">
+                    <div className="exp-stat">
+                      <span className="exp-stat-number">{classLevel.students}</span>
+                      <span className="exp-stat-label">Students</span>
                     </div>
-                    <div className="stat">
-                      <span className="stat-number">{classLevel.duration}</span>
-                      <span className="stat-label">Duration</span>
+                    <div className="exp-stat">
+                      <span className="exp-stat-number">{classLevel.duration}</span>
+                      <span className="exp-stat-label">Duration</span>
                     </div>
                   </div>
                 </div>
-                <h3 className="class-title">{classLevel.title}</h3>
-                <p className="class-description">{classLevel.description}</p>
-                <div className="class-features">
+                <h3 className="exp-class-title">{classLevel.title}</h3>
+                <p className="exp-class-description">{classLevel.description}</p>
+                <div className="exp-class-features">
                   {classLevel.features.map((feature, featureIndex) => (
-                    <span key={featureIndex} className="feature-tag">
+                    <span key={featureIndex} className="exp-feature-tag">
                       {feature}
                     </span>
                   ))}
                 </div>
-                <Link to="/contact" className="class-cta">
+                <Link to="/contact" className="exp-class-cta">
                   Enroll Now
                   <FaArrowRight />
                 </Link>
-                <div className="class-glow"></div>
               </div>
             ))}
           </div>
@@ -205,33 +157,23 @@ const ExploreClasses = () => {
       </section>
 
       {/* Features Section */}
-      <section className="features-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-badge" data-animate="features-badge">
-              Why Choose Us
-            </span>
-            <h2 className="section-title" data-animate="features-title">
-              Excellence in Japanese Education
-            </h2>
-            <p className="section-subtitle" data-animate="features-subtitle">
+      <section className="exp-features-section">
+        <div className="exp-container">
+          <div className="exp-section-header">
+            <span className="exp-section-badge">Why Choose Us</span>
+            <h2 className="exp-section-title">Excellence in Japanese Education</h2>
+            <p className="exp-section-subtitle">
               Experience the difference with our proven teaching methods and dedicated support
             </p>
           </div>
-
-          <div className="features-grid">
+          <div className="exp-features-grid">
             {features.map((feature, index) => (
-              <div
-                key={index}
-                className={`feature-card ${visibleElements.has(`feature-${index}`) ? "animate" : ""}`}
-                data-animate={`feature-${index}`}
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <div className="feature-icon">
+              <div key={index} className="exp-feature-card">
+                <div className="exp-feature-icon">
                   <feature.icon />
                 </div>
-                <h4 className="feature-title">{feature.title}</h4>
-                <p className="feature-description">{feature.description}</p>
+                <h4 className="exp-feature-title">{feature.title}</h4>
+                <p className="exp-feature-description">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -239,51 +181,37 @@ const ExploreClasses = () => {
       </section>
 
       {/* Schedule Section */}
-      <section className="schedule-section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-badge" data-animate="schedule-badge">
-              Class Schedule
-            </span>
-            <h2 className="section-title" data-animate="schedule-title">
-              Flexible Learning Times
-            </h2>
-            <p className="section-subtitle" data-animate="schedule-subtitle">
+      <section className="exp-schedule-section">
+        <div className="exp-container">
+          <div className="exp-section-header">
+            <span className="exp-section-badge">Class Schedule</span>
+            <h2 className="exp-section-title">Flexible Learning Times</h2>
+            <p className="exp-section-subtitle">
               Choose the schedule that works best for your lifestyle and commitments
             </p>
           </div>
-
-          <div className="schedule-grid">
+          <div className="exp-schedule-grid">
             {scheduleInfo.map((schedule, index) => (
-              <div
-                key={index}
-                className={`schedule-card ${visibleElements.has(`schedule-${index}`) ? "animate" : ""}`}
-                data-animate={`schedule-${index}`}
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <div className="schedule-icon">
+              <div key={index} className="exp-schedule-card">
+                <div className="exp-schedule-icon">
                   <schedule.icon />
                 </div>
-                <h4 className="schedule-title">{schedule.title}</h4>
-                <div className="schedule-time">{schedule.time}</div>
-                <p className="schedule-description">{schedule.description}</p>
+                <h4 className="exp-schedule-title">{schedule.title}</h4>
+                <div className="exp-schedule-time">{schedule.time}</div>
+                <p className="exp-schedule-description">{schedule.description}</p>
               </div>
             ))}
           </div>
-
-          <div
-            className={`schedule-cta ${visibleElements.has("schedule-cta") ? "animate" : ""}`}
-            data-animate="schedule-cta"
-          >
-            <div className="cta-content">
+          <div className="exp-schedule-cta">
+            <div className="exp-cta-content">
               <h3>Ready to Start Learning?</h3>
               <p>Visit our Chabahil office to meet our instructors and find the perfect class schedule for you!</p>
-              <div className="cta-buttons">
-                <Link to="/contact" className="btn btn-primary">
+              <div className="exp-cta-buttons">
+                <Link to="/contact" className="exp-btn exp-btn-primary">
                   Visit Our Office
                   <FaArrowRight />
                 </Link>
-                <Link to="/team" className="btn btn-outline">
+                <Link to="/team" className="exp-btn exp-btn-secondary">
                   Meet Instructors
                 </Link>
               </div>
@@ -293,13 +221,13 @@ const ExploreClasses = () => {
       </section>
 
       {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-brand">
+      <footer className="exp-footer">
+        <div className="exp-container">
+          <div className="exp-footer-content">
+            <div className="exp-footer-brand">
               <h3>Kyushu Edu Consultancy</h3>
               <p>Empowering your journey to Japan with expert language education and comprehensive support.</p>
-              <div className="social-links">
+              <div className="exp-social-links">
                 <a href="https://www.facebook.com/kyushuedu/" target="_blank" rel="noopener noreferrer">
                   <FaFacebookF />
                 </a>
@@ -311,24 +239,22 @@ const ExploreClasses = () => {
                 </a>
               </div>
             </div>
-
-            <div className="footer-contact">
+            <div className="exp-footer-contact">
               <h4>Contact Info</h4>
-              <div className="contact-item">
+              <div className="exp-contact-item">
                 <span>📧</span>
                 <span>kyushuedu@gmail.com</span>
               </div>
-              <div className="contact-item">
+              <div className="exp-contact-item">
                 <span>📞</span>
                 <span>+977-14581248</span>
               </div>
-              <div className="contact-item">
+              <div className="exp-contact-item">
                 <span>📍</span>
                 <span>Chabahil, Kathmandu</span>
               </div>
             </div>
-
-            <div className="footer-links">
+            <div className="exp-footer-links">
               <h4>Quick Links</h4>
               <Link to="/classes">Japanese Classes</Link>
               <Link to="/visa">Visa Services</Link>
@@ -336,8 +262,7 @@ const ExploreClasses = () => {
               <Link to="/contact">Contact</Link>
             </div>
           </div>
-
-          <div className="footer-bottom">
+          <div className="exp-footer-bottom">
             <p>© 2025 Kyushu Edu Consultancy. All rights reserved.</p>
           </div>
         </div>
