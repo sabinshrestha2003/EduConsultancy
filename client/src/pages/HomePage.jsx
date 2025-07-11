@@ -264,28 +264,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="cta-section">
-        <div className="container">
-          <div className="cta-content">
-            <div className="cta-badge">
-              <span>Ready to start?</span>
-            </div>
-            <h2>Your Japan journey begins today</h2>
-            <p>Join hundreds of successful students who trusted us with their dreams</p>
-            <div className="cta-buttons">
-              <Link to="/contact" className="btn btn-white">
-                Visit Our Office
-                <FaArrowRight />
-              </Link>
-              <Link to="/classes" className="btn btn-outline-white">
-                Explore Programs
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="footer">
         <div className="container">

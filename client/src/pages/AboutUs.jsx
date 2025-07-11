@@ -109,25 +109,9 @@ const AboutUs = () => {
   return (
     <div className="about-page">
       {/* Hero Section */}
-      <section className="hero" style={{ height: "70vh" }}>
-        <div className="hero-background">
-          <div className="hero-particles">
-            {[...Array(25)].map((_, i) => (
-              <div
-                key={i}
-                className="particle"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 20}s`,
-                  animationDuration: `${15 + Math.random() * 10}s`,
-                }}
-              />
-            ))}
-          </div>
-          <div className="hero-overlay" />
-        </div>
+      <section className="hero">
         <div className="hero-content">
-          <div className="hero-badge" data-animate="hero-badge" style={{ marginBottom: "2rem" }}>
+          <div className="hero-badge" data-animate="hero-badge">
             <span>🏢 About Kyushu Edu</span>
           </div>
           <h1 className="hero-title" data-animate="hero-title">
@@ -135,7 +119,7 @@ const AboutUs = () => {
             <br />
             <span className="accent-text">Story</span>
           </h1>
-          <p className="hero-description" data-animate="hero-desc" style={{ marginBottom: "2.5rem" }}>
+          <p className="hero-description" data-animate="hero-desc">
             Empowering dreams and connecting futures with Japan through expert guidance, personalized support, and
             unwavering commitment to your success.
           </p>
@@ -150,31 +134,25 @@ const AboutUs = () => {
             </Link>
           </div>
         </div>
-        <div className="floating-elements">
-          <div className="floating-element element-1">🇯🇵</div>
-          <div className="floating-element element-2">🎓</div>
-          <div className="floating-element element-3">✈️</div>
-          <div className="floating-element element-4">🌸</div>
-        </div>
       </section>
 
       {/* Achievements Section */}
-      <section className="achievements-section">
+      <section className="stats-section">
         <div className="container">
-          <div className="achievements-grid">
+          <div className="stats-grid">
             {achievements.map((achievement, index) => (
               <div
                 key={index}
-                className={`achievement-card ${visibleElements.has(`achievement-${index}`) ? "animate" : ""}`}
+                className={`stat-card ${visibleElements.has(`achievement-${index}`) ? "animate" : ""}`}
                 data-animate={`achievement-${index}`}
                 style={{ animationDelay: achievement.delay }}
               >
-                <div className="achievement-icon">
+                <div className="card-glow"></div>
+                <div className="stat-icon">
                   <achievement.icon />
                 </div>
-                <div className="achievement-number">{achievement.number}</div>
-                <div className="achievement-label">{achievement.label}</div>
-                <div className="achievement-glow"></div>
+                <div className="stat-number">{achievement.number}</div>
+                <div className="stat-label">{achievement.label}</div>
               </div>
             ))}
           </div>
@@ -182,7 +160,7 @@ const AboutUs = () => {
       </section>
 
       {/* About Story Section */}
-      <section className="story-section" id="story">
+      <section className="pathways-section" id="story">
         <div className="container">
           <div className="section-header">
             <span className="section-badge" data-animate="story-badge">
@@ -195,77 +173,76 @@ const AboutUs = () => {
               Discover what drives us and how we've become Nepal's trusted partner for Japan education
             </p>
           </div>
-          <div className="story-grid">
+          <div className="pathways-grid">
             <div
-              className={`story-card mission-card ${visibleElements.has("mission") ? "animate" : ""}`}
+              className={`pathway-card ${visibleElements.has("mission") ? "animate" : ""}`}
               data-animate="mission"
             >
-              <div className="card-header">
+              <div className="card-glow"></div>
+              <div className="pathway-icon">
                 <div className="card-icon">🎯</div>
-                <h3 className="card-title">Our Mission</h3>
               </div>
-              <p className="card-description">
+              <h3>Our Mission</h3>
+              <p>
                 Kyushu Edu Consultancy is dedicated to helping individuals explore opportunities in Japan through
                 exceptional educational and immigration support. Our services include language training, visa
                 processing, and cultural integration programs, fostering a supportive environment for all.
               </p>
-              <div className="card-glow"></div>
             </div>
             <div
-              className={`story-card vision-card ${visibleElements.has("vision") ? "animate" : ""}`}
+              className={`pathway-card ${visibleElements.has("vision") ? "animate" : ""}`}
               data-animate="vision"
             >
-              <div className="card-header">
+              <div className="card-glow"></div>
+              <div className="pathway-icon">
                 <div className="card-icon">🌟</div>
-                <h3 className="card-title">Our Vision</h3>
               </div>
-              <p className="card-description">
+              <h3>Our Vision</h3>
+              <p>
                 We aim to empower 10,000 individuals to relocate and thrive in Japan by 2030. Through top-tier
                 educational resources, streamlined visa assistance, and personalized career guidance, we make dreams of
                 living in Japan a reality.
               </p>
-              <div className="card-glow"></div>
             </div>
             <div
-              className={`story-card journey-card ${visibleElements.has("journey") ? "animate" : ""}`}
+              className={`pathway-card ${visibleElements.has("journey") ? "animate" : ""}`}
               data-animate="journey"
             >
-              <div className="card-header">
+              <div className="card-glow"></div>
+              <div className="pathway-icon">
                 <div className="card-icon">🚀</div>
-                <h3 className="card-title">Our Journey</h3>
               </div>
-              <p className="card-description">
+              <h3>Our Journey</h3>
+              <p>
                 Since our founding in 2018, Kyushu Edu Consultancy has grown from a small startup to a trusted name in
                 educational consultancy. Over the past 7 years, we've helped hundreds achieve their goals with passion
                 and dedication.
               </p>
-              <div className="card-glow"></div>
             </div>
             <div
-              className={`story-card choose-card ${visibleElements.has("choose") ? "animate" : ""}`}
+              className={`pathway-card ${visibleElements.has("choose") ? "animate" : ""}`}
               data-animate="choose"
             >
-              <div className="card-header">
+              <div className="card-glow"></div>
+              <div className="pathway-icon">
                 <div className="card-icon">⭐</div>
-                <h3 className="card-title">Why Choose Us?</h3>
               </div>
-              <p className="card-description">
+              <h3>Why Choose Us?</h3>
+              <p>
                 With unmatched expertise and a commitment to excellence, we provide tailored solutions for a seamless
                 journey to Japan. Our team's personalized support and proven success make us the ideal partner for your
                 aspirations.
               </p>
-              <Link to="/contact" className="card-cta">
-                Contact Us
+              <Link to="/contact" className="pathway-arrow">
                 <FaArrowRight />
               </Link>
-              <div className="card-glow"></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Timeline Section */}
-      <section className="timeline-section">
+      <section className="journey-section">
         <div className="container">
           <div className="section-header">
             <span className="section-badge" data-animate="timeline-badge">
@@ -278,20 +255,19 @@ const AboutUs = () => {
               Key moments that shaped our path to becoming Nepal's leading Japan education consultancy
             </p>
           </div>
-          <div className="timeline-container">
+          <div className="timeline">
             {milestones.map((milestone, index) => (
               <div
                 key={index}
-                className={`timeline-milestone ${visibleElements.has(`milestone-${index}`) ? "animate" : ""}`}
+                className={`timeline-item ${visibleElements.has(`milestone-${index}`) ? "animate" : ""}`}
                 data-animate={`milestone-${index}`}
               >
-                <div className="milestone-year">{milestone.year}</div>
-                <div className="milestone-content">
-                  <h4>{milestone.title}</h4>
+                <div className="card-glow"></div>
+                <div className="timeline-number">{milestone.year}</div>
+                <div className="timeline-content">
+                  <h3>{milestone.title}</h3>
                   <p>{milestone.description}</p>
                 </div>
-                <div className="milestone-connector"></div>
-                <div className="milestone-glow"></div>
               </div>
             ))}
           </div>
@@ -366,51 +342,25 @@ const AboutUs = () => {
               The principles that guide everything we do and shape our commitment to excellence
             </p>
           </div>
-          <div className="values-grid">
+          <div className="pathways-grid">
             {values.map((value, index) => (
               <div
                 key={index}
-                className={`value-card ${visibleElements.has(`value-${index}`) ? "animate" : ""}`}
+                className={`pathway-card ${visibleElements.has(`value-${index}`) ? "animate" : ""}`}
                 data-animate={`value-${index}`}
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
-                <div className="value-icon-wrapper">
-                  <div className={`value-icon bg-gradient-to-br ${value.color}`}>
-                    <value.icon />
-                  </div>
+                <div className="card-glow"></div>
+                <div className={`pathway-icon bg-gradient-to-br ${value.color}`}>
+                  <value.icon />
                 </div>
-                <h4 className="value-title">{value.title}</h4>
-                <p className="value-description">{value.description}</p>
-                <div className="value-glow"></div>
+                <h3>{value.title}</h3>
+                <p>{value.description}</p>
+                <div className="pathway-arrow">
+                  <FaArrowRight />
+                </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="cta-section">
-        <div className="cta-background">
-          <div className="cta-pattern"></div>
-        </div>
-        <div className="container">
-          <div className={`cta-content ${visibleElements.has("cta") ? "animate" : ""}`} data-animate="cta">
-            <div className="cta-badge">
-              <span>Ready to start?</span>
-            </div>
-            <h2>Begin Your Japan Journey Today</h2>
-            <p>
-              Join hundreds of successful students who trusted us with their dreams and achieved extraordinary results
-            </p>
-            <div className="cta-buttons">
-              <Link to="/contact" className="btn btn-white">
-                Visit Our Office
-                <FaArrowRight />
-              </Link>
-              <Link to="/classes" className="btn btn-outline-white">
-                Explore Programs
-              </Link>
-            </div>
           </div>
         </div>
       </section>
