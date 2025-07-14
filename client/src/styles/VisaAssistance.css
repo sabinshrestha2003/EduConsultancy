@@ -1,5 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 
+/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +8,8 @@
 }
 
 *:focus {
-  outline: none;
+  outline: 2px solid #1e3a8a;
+  outline-offset: 2px;
 }
 
 body {
@@ -15,306 +17,781 @@ body {
   line-height: 1.6;
   color: #1e293b;
   background: #ffffff;
+  scroll-behavior: smooth;
 }
 
-/* Color Variables (same as homepage) */
+/* CSS Custom Properties */
 :root {
-  --visa-primary-blue: #1e3a8a;
-  --visa-secondary-orange: #f97316;
+  --visa-primary: #1e3a8a;
+  --visa-secondary: #f97316;
   --visa-white: #ffffff;
-  --visa-light-gray: #f8fafc;
-  --visa-dark-gray: #1e293b;
-  --visa-radius: 6px;
+  --visa-gray-50: #f8fafc;
+  --visa-gray-100: #f1f5f9;
+  --visa-gray-200: #e2e8f0;
+  --visa-gray-300: #cbd5e1;
+  --visa-gray-600: #475569;
+  --visa-gray-700: #334155;
+  --visa-gray-800: #1e293b;
+  --visa-gray-900: #0f172a;
+  --visa-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --visa-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --visa-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --visa-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --visa-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --visa-radius: 8px;
+  --visa-radius-lg: 12px;
+  --visa-radius-xl: 16px;
 }
 
-/* Page Layout */
+/* Animations */
+@keyframes visa-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Base Layout */
 .visa-page {
   min-height: 100vh;
 }
 
 .visa-container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
 }
 
 /* Hero Section */
 .visa-hero {
-  padding: 1.5rem 0;
-  text-align: center;
+  position: relative;
+  padding: 8rem 0 6rem;
+  background: var(--visa-primary);
+  color: var(--visa-white);
+  overflow: hidden;
+}
+
+.visa-hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--visa-primary) 0%, #1e40af 100%);
+}
+
+.visa-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 58, 138, 0.1);
 }
 
 .visa-hero-content {
-  background: var(--visa-primary-blue);
-  padding: 1.2rem;
-  border-radius: var(--visa-radius);
-  max-width: 450px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
   margin: 0 auto;
+  animation: visa-fadeInUp 1s ease-out;
 }
 
 .visa-hero-badge {
-  display: inline-block;
-  padding: 0.4rem 0.8rem;
-  background: var(--visa-white);
-  color: var(--visa-primary-blue);
-  border-radius: var(--visa-radius);
-  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
   font-weight: 500;
-  margin-bottom: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.visa-hero-badge svg {
+  color: var(--visa-secondary);
 }
 
 .visa-hero-title {
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--visa-white);
-  margin-bottom: 0.5rem;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
 }
 
-.visa-accent-text {
-  color: var(--visa-secondary-orange);
+.visa-highlight {
+  color: var(--visa-secondary);
 }
 
 .visa-hero-description {
-  font-size: 0.9rem;
-  color: var(--visa-white);
-  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  opacity: 0.95;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Content Section */
-.visa-content {
-  padding: 2rem 0;
-  background: var(--visa-light-gray);
-}
-
-.visa-content-sections {
+.visa-hero-actions {
   display: flex;
-  flex-direction: column;
   gap: 1rem;
-}
-
-.visa-section {
-  background: var(--visa-white);
-  padding: 1.2rem;
-  border-radius: var(--visa-radius);
-  border: 1px solid var(--visa-light-gray);
-}
-
-.visa-section h2 {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--visa-dark-gray);
-  margin-bottom: 0.5rem;
-}
-
-.visa-section p {
-  font-size: 0.9rem;
-  color: var(--visa-dark-gray);
-  margin-bottom: 1rem;
-}
-
-.visa-timeline-content {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 1rem;
-}
-
-.visa-timeline-step {
-  font-size: 0.9rem;
-  color: var(--visa-dark-gray);
-  padding: 0.5rem 0;
-  position: relative;
-  padding-left: 2rem;
-}
-
-.visa-timeline-step:before {
-  content: counter(step);
-  counter-increment: step;
-  position: absolute;
-  left: 0;
-  width: 1.2rem;
-  height: 1.2rem;
-  background: var(--visa-secondary-orange);
-  color: var(--visa-white);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.visa-buttons {
-  display: flex;
-  gap: 0.8rem;
   flex-wrap: wrap;
+  margin-bottom: 3rem;
 }
 
 .visa-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 1.2rem;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
   border-radius: var(--visa-radius);
+  font-weight: 600;
+  font-size: 1rem;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 0.85rem;
-  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
 }
 
 .visa-btn-primary {
-  background: var(--visa-secondary-orange);
+  background: var(--visa-secondary);
   color: var(--visa-white);
 }
 
 .visa-btn-primary:hover {
-  background: var(--visa-primary-blue);
-  border-color: var(--visa-secondary-orange);
+  background: #ea580c;
+  transform: translateY(-2px);
+  box-shadow: var(--visa-shadow-lg);
 }
 
-.visa-btn-secondary {
-  background: var(--visa-white);
-  color: var(--visa-primary-blue);
-  border-color: var(--visa-primary-blue);
-}
-
-.visa-btn-secondary:hover {
-  background: var(--visa-secondary-orange);
+.visa-btn-outline {
+  background: transparent;
   color: var(--visa-white);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.visa-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.visa-hero-stats {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.visa-stat-item {
+  text-align: center;
+}
+
+.visa-stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--visa-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.visa-stat-label {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+/* Section Headers */
+.visa-section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.visa-section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: var(--visa-gray-900);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.visa-section-subtitle {
+  font-size: 1.125rem;
+  color: var(--visa-gray-600);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Visa Types Section */
+.visa-types-section {
+  padding: 6rem 0;
+  background: var(--visa-gray-50);
+}
+
+.visa-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
+}
+
+.visa-type-card {
+  background: var(--visa-white);
+  border: 1px solid var(--visa-gray-200);
+  border-radius: var(--visa-radius-xl);
+  padding: 0;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.visa-type-card.visa-visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: visa-fadeInUp 0.6s ease-out;
+  animation-delay: var(--delay);
+  animation-fill-mode: both;
+}
+
+.visa-type-card:hover {
+  border-color: var(--visa-primary);
+  box-shadow: var(--visa-shadow-xl);
+  transform: translateY(-5px);
+}
+
+.visa-type-header {
+  background: var(--visa-gray-50);
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--visa-gray-200);
+}
+
+.visa-type-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--visa-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--visa-white);
+  font-size: 1.75rem;
+}
+
+.visa-type-tag {
+  background: var(--visa-primary);
+  color: var(--visa-white);
+  padding: 0.5rem 1rem;
+  border-radius: var(--visa-radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.visa-type-content {
+  padding: 2rem;
+}
+
+.visa-type-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--visa-gray-900);
+  margin-bottom: 1rem;
+}
+
+.visa-type-description {
+  color: var(--visa-gray-600);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.visa-type-features {
+  margin-bottom: 2rem;
+}
+
+.visa-type-features h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--visa-gray-900);
+  margin-bottom: 1rem;
+}
+
+.visa-type-features ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.visa-type-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--visa-gray-700);
+}
+
+.visa-type-features svg {
+  color: var(--visa-secondary);
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.visa-type-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--visa-primary);
+  color: var(--visa-white);
+  padding: 1rem 2rem;
+  border-radius: var(--visa-radius);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.visa-type-cta:hover {
+  background: #1e40af;
+  transform: translateY(-2px);
+  box-shadow: var(--visa-shadow-md);
+}
+
+/* Process Section */
+.visa-process-section {
+  padding: 6rem 0;
+  background: var(--visa-white);
+}
+
+.visa-process-timeline {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.visa-process-step {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.visa-process-step.visa-visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: visa-fadeInUp 0.6s ease-out;
+  animation-delay: var(--delay);
+  animation-fill-mode: both;
+}
+
+.visa-step-number {
+  width: 60px;
+  height: 60px;
+  background: var(--visa-primary);
+  color: var(--visa-white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.visa-step-content {
+  flex: 1;
+  background: var(--visa-gray-50);
+  border: 1px solid var(--visa-gray-200);
+  border-radius: var(--visa-radius-lg);
+  padding: 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.visa-step-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--visa-white);
+  border-radius: var(--visa-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--visa-primary);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.visa-step-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--visa-gray-900);
+  margin-bottom: 0.5rem;
+}
+
+.visa-step-description {
+  color: var(--visa-gray-600);
+  line-height: 1.6;
+}
+
+/* Features Section */
+.visa-features-section {
+  padding: 6rem 0;
+  background: var(--visa-gray-50);
+}
+
+.visa-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.visa-feature-card {
+  display: flex;
+  gap: 1rem;
+  background: var(--visa-white);
+  border: 1px solid var(--visa-gray-200);
+  border-radius: var(--visa-radius-lg);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.visa-feature-card.visa-visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: visa-fadeInUp 0.6s ease-out;
+  animation-delay: var(--delay);
+  animation-fill-mode: both;
+}
+
+.visa-feature-card:hover {
+  border-color: var(--visa-primary);
+  box-shadow: var(--visa-shadow-lg);
+  transform: translateY(-3px);
+}
+
+.visa-feature-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--visa-primary);
+  border-radius: var(--visa-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--visa-white);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.visa-feature-content {
+  flex: 1;
+}
+
+.visa-feature-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--visa-gray-900);
+  margin-bottom: 0.5rem;
+}
+
+.visa-feature-description {
+  color: var(--visa-gray-600);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.visa-feature-stats {
+  background: var(--visa-gray-100);
+  color: var(--visa-primary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--visa-radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* CTA Section */
+.visa-cta-section {
+  padding: 5rem 0;
+  background: var(--visa-primary);
+  color: var(--visa-white);
+}
+
+.visa-cta-content {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.visa-cta-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.visa-cta-description {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  opacity: 0.95;
+}
+
+.visa-cta-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.visa-cta-section .visa-btn-primary {
+  background: var(--visa-secondary);
+}
+
+.visa-cta-section .visa-btn-outline {
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Footer */
 .visa-footer {
-  background: var(--visa-primary-blue);
+  background: var(--visa-gray-900);
   color: var(--visa-white);
-  padding: 1.5rem 0;
+  padding: 4rem 0 2rem;
 }
 
 .visa-footer-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  margin-bottom: 3rem;
 }
 
-.visa-footer-section h3 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 0.8rem;
-  color: var(--visa-secondary-orange);
+.visa-footer-brand h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--visa-secondary);
 }
 
-.visa-footer-section p {
-  font-size: 0.9rem;
-  color: var(--visa-white);
+.visa-footer-brand p {
+  color: var(--visa-gray-300);
+  line-height: 1.6;
+  margin-bottom: 2rem;
 }
 
 .visa-social-links {
   display: flex;
-  gap: 0.8rem;
-  margin-top: 0.8rem;
+  gap: 1rem;
 }
 
 .visa-social-link {
-  width: 35px;
-  height: 35px;
-  background: var(--visa-secondary-orange);
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background: var(--visa-primary);
+  border-radius: var(--visa-radius);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--visa-white);
   text-decoration: none;
-  font-size: 0.9rem;
+  transition: all 0.2s ease;
 }
 
 .visa-social-link:hover {
-  background: var(--visa-white);
-  color: var(--visa-primary-blue);
-}
-
-.visa-contact-info p {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  background: var(--visa-secondary);
+  transform: translateY(-2px);
 }
 
 .visa-footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.visa-footer-column h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--visa-white);
+}
+
+.visa-footer-column ul {
+  list-style: none;
+}
+
+.visa-footer-column li {
+  margin-bottom: 0.5rem;
+}
+
+.visa-footer-column a {
+  color: var(--visa-gray-300);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.visa-footer-column a:hover {
+  color: var(--visa-secondary);
+}
+
+.visa-contact-info {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
-.visa-footer-links a {
-  color: var(--visa-white);
-  text-decoration: none;
-  font-size: 0.9rem;
+.visa-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--visa-gray-300);
 }
 
-.visa-footer-links a:hover {
-  color: var(--visa-secondary-orange);
+.visa-contact-item svg {
+  color: var(--visa-secondary);
+  font-size: 0.875rem;
+  flex-shrink: 0;
 }
 
 .visa-footer-bottom {
-  text-align: center;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: 0.85rem;
-  color: var(--visa-white);
+  border-top: 1px solid var(--visa-gray-700);
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--visa-gray-400);
+  font-size: 0.875rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  .visa-hero {
-    padding: 1rem 0;
+@media (max-width: 1024px) {
+  .visa-footer-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
 
-  .visa-hero-title {
-    font-size: 1.8rem;
+  .visa-footer-links {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .visa-hero-content {
-    max-width: 100%;
-    padding: 1rem;
+  .visa-types-grid {
+    grid-template-columns: 1fr;
   }
 
-  .visa-buttons {
+  .visa-process-step {
     flex-direction: column;
-    align-items: center;
+    text-align: center;
+  }
+
+  .visa-step-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .visa-container {
+    padding: 0 1.5rem;
+  }
+
+  .visa-hero {
+    padding: 6rem 0 4rem;
+  }
+
+  .visa-hero-actions {
+    flex-direction: column;
   }
 
   .visa-btn {
     width: 100%;
-    max-width: 200px;
+    justify-content: center;
   }
 
-  .visa-footer-content {
+  .visa-hero-stats {
+    gap: 2rem;
+  }
+
+  .visa-features-grid {
     grid-template-columns: 1fr;
+  }
+
+  .visa-feature-card {
+    flex-direction: column;
     text-align: center;
+  }
+
+  .visa-footer-links {
+    grid-template-columns: 1fr;
+  }
+
+  .visa-footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .visa-cta-actions {
+    flex-direction: column;
   }
 }
 
 @media (max-width: 480px) {
   .visa-container {
-    padding: 0 0.8rem;
+    padding: 0 1rem;
   }
 
-  .visa-hero-title {
-    font-size: 1.6rem;
+  .visa-hero {
+    padding: 5rem 0 3rem;
   }
 
-  .visa-section h2 {
-    font-size: 1.4rem;
+  .visa-hero-stats {
+    gap: 1.5rem;
   }
 
-  .visa-btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
+  .visa-stat-item {
+    flex: 1;
   }
 
-  .visa-social-link {
-    width: 30px;
-    height: 30px;
-    font-size: 0.8rem;
+  .visa-type-card,
+  .visa-feature-card,
+  .visa-step-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .visa-type-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  * {
+    box-shadow: none !important;
   }
 }
