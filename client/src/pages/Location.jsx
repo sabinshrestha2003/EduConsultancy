@@ -15,7 +15,8 @@ import {
   FaUsers,
   FaHandshake,
   FaInfoCircle,
-  FaFileAlt, // Import FaFileAlt here
+  FaFileAlt,
+  FaKey, // Added FaKey for admin login
 } from "react-icons/fa"
 import "../styles/Location.css"
 
@@ -390,8 +391,11 @@ const Location = () => {
           </div>
 
           <div className="loc-footer-bottom">
-            <p>&copy; 2025 Kyushu Edu Consultancy. All rights reserved.</p>
+            <p>© 2025 Kyushu Edu Consultancy. All rights reserved.</p>
             <p>Professional Japanese Education Services in Nepal</p>
+            <Link to="/admin-login" className="loc-admin-btn" title="Admin Access">
+              <FaKey />
+            </Link>
           </div>
         </div>
       </footer>

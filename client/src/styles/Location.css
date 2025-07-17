@@ -575,6 +575,29 @@ body {
   font-size: 0.875rem;
   flex-wrap: wrap;
   gap: 1rem;
+  position: relative; /* Added for positioning admin button */
+}
+
+.loc-admin-btn {
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid var(--loc-gray-700);
+  border-radius: var(--loc-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--loc-gray-400);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  opacity: 0.6; /* Subtle appearance */
+}
+
+.loc-admin-btn:hover {
+  background: var(--loc-primary);
+  color: var(--loc-white);
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
 /* Responsive Design */
@@ -637,6 +660,12 @@ body {
   .loc-final-cta-actions {
     flex-direction: column;
   }
+
+  .loc-admin-btn {
+    position: absolute;
+    right: 1rem;
+    top: 2rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -676,5 +705,9 @@ body {
 @media print {
   * {
     box-shadow: none !important;
+  }
+
+  .loc-admin-btn {
+    display: none; /* Hide admin button when printing */
   }
 }
