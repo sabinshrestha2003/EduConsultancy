@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import {
+  FaTachometerAlt,
+  FaEnvelope,
+  FaSignOutAlt,
+  FaFilter,
+  FaSort,
+  FaSearch,
+} from 'react-icons/fa';
+import '../styles/Dashboard.css';
 
 const Dashboard = () => {
   const [message, setMessage] = useState('');
@@ -27,7 +36,7 @@ const Dashboard = () => {
           headers: { 'Authorization': `Bearer ${token}` },
         });
         const result = await response.json();
-        
+
         if (result.message === 'Invalid token') {
           localStorage.removeItem('adminToken');
           navigate('/admin-login', { replace: true });
@@ -81,107 +90,151 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="homepage" style={{ padding: '2rem 0', background: 'var(--white)' }}>
-      <div className="container">
-        <h1 className="section-title" style={{ color: 'var(--primary-blue)', marginBottom: '2rem' }}>Admin Dashboard</h1>
-        <p style={{ color: 'var(--dark-gray)', marginBottom: '2rem' }}>{message}</p>
-        {data && (
-          <div className="services-grid" style={{ marginBottom: '2rem' }}>
-            <div className="service-card" style={{ textAlign: 'left' }}>
-              <h3 style={{ color: 'var(--primary-blue)', marginBottom: '1rem' }}>Statistics</h3>
-              <div style={{ display: 'flex', gap: '1.5rem' }}>
-                <div className="stat">
-                  <p className="stat-number">{visitCount}</p>
-                  <p className="stat-label">Website Visits</p>
+    <div className="dash-page">
+      <div className="dash-sidebar">
+        <div className="dash-sidebar-brand">
+          <h3>Kyushu Edu Admin</h3>
+        </div>
+        <ul className="dash-sidebar-nav">
+          <li>
+            <Link to="/admin/dashboard" className="dash-sidebar-link dash-active">
+              <FaTachometerAlt />
+              <span>Dashboard</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin/submissions" className="dash-sidebar-link">
+              <FaEnvelope />
+              <span>Submissions</span>
+            </Link>
+          </li>
+          <li>
+            <button
+              className="dash-sidebar-link dash-btn-logout"
+              onClick={() => {
+                localStorage.removeItem('adminToken');
+                navigate('/');
+              }}
+            >
+              <FaSignOutAlt />
+              <span>Logout</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div className="dash-main">
+        <div className="dash-container">
+          <h1 className="dash-title">Admin Dashboard</h1>
+          {message && <p className="dash-message">{message}</p>}
+
+          {data && (
+            <div className="dash-stats">
+              <div className="dash-stat-card">
+                <FaTachometerAlt className="dash-stat-icon" />
+                <div className="dash-stat-content">
+                  <h3>Website Visits</h3>
+                  <p className="dash-stat-number">{visitCount}</p>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-        {submissions.length > 0 && (
-          <div className="services-grid">
-            <div className="service-card" style={{ textAlign: 'left' }}>
-              <h3 style={{ color: 'var(--primary-blue)', marginBottom: '1rem' }}>Recent Contact Submissions</h3>
-              <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <select
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                  style={{ padding: '0.5rem', borderRadius: '5px', border: '1px solid var(--light-gray)' }}
-                >
-                  <option value="All">All</option>
-                  <option value="Not Read">Not Read</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Confirmed">Confirmed</option>
-                </select>
-                <select
-                  value={sortOrder}
-                  onChange={(e) => setSortOrder(e.target.value)}
-                  style={{ padding: '0.5rem', borderRadius: '5px', border: '1px solid var(--light-gray)' }}
-                >
-                  <option value="Latest">Latest</option>
-                  <option value="Oldest">Oldest</option>
-                </select>
-                <input
-                  type="text"
-                  placeholder="Search by Name"
-                  value={searchName}
-                  onChange={(e) => setSearchName(e.target.value)}
-                  style={{ padding: '0.5rem', borderRadius: '5px', border: '1px solid var(--light-gray)' }}
-                />
-                <input
-                  type="text"
-                  placeholder="Search by Email"
-                  value={searchEmail}
-                  onChange={(e) => setSearchEmail(e.target.value)}
-                  style={{ padding: '0.5rem', borderRadius: '5px', border: '1px solid var(--light-gray)' }}
-                />
-                <input
-                  type="date"
-                  value={searchDate}
-                  onChange={(e) => setSearchDate(e.target.value)}
-                  style={{ padding: '0.5rem', borderRadius: '5px', border: '1px solid var(--light-gray)' }}
-                />
+          )}
+
+          {submissions.length > 0 && (
+            <div className="dash-submissions">
+              <h2 className="dash-section-title">Recent Contact Submissions</h2>
+              <div className="dash-filters">
+                <div className="dash-filter-group">
+                  <FaFilter className="dash-filter-icon" />
+                  <select
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                    className="dash-filter-select"
+                  >
+                    <option value="All">All Statuses</option>
+                    <option value="Not Read">Not Read</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                  </select>
+                </div>
+                <div className="dash-filter-group">
+                  <FaSort className="dash-filter-icon" />
+                  <select
+                    value={sortOrder}
+                    onChange={(e) => setSortOrder(e.target.value)}
+                    className="dash-filter-select"
+                  >
+                    <option value="Latest">Latest</option>
+                    <option value="Oldest">Oldest</option>
+                  </select>
+                </div>
+                <div className="dash-filter-group">
+                  <FaSearch className="dash-filter-icon" />
+                  <input
+                    type="text"
+                    placeholder="Search by Name"
+                    value={searchName}
+                    onChange={(e) => setSearchName(e.target.value)}
+                    className="dash-filter-input"
+                  />
+                </div>
+                <div className="dash-filter-group">
+                  <FaSearch className="dash-filter-icon" />
+                  <input
+                    type="text"
+                    placeholder="Search by Email"
+                    value={searchEmail}
+                    onChange={(e) => setSearchEmail(e.target.value)}
+                    className="dash-filter-input"
+                  />
+                </div>
+                <div className="dash-filter-group">
+                  <FaSearch className="dash-filter-icon" />
+                  <input
+                    type="date"
+                    value={searchDate}
+                    onChange={(e) => setSearchDate(e.target.value)}
+                    className="dash-filter-input"
+                  />
+                </div>
               </div>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
+
+              <div className="dash-submissions-grid">
                 {sortedSubmissions.map((submission) => (
-                  <li key={submission._id} style={{
-                    margin: '1rem 0',
-                    padding: '1rem',
-                    background: 'var(--white)',
-                    borderRadius: '8px',
-                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.05)',
-                    borderLeft: `4px solid ${submission.status === 'Not Read' ? 'var(--primary-blue)' : submission.status === 'Pending' ? '#ff9800' : '#4caf50'}`,
-                  }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <p><strong>Name:</strong> {submission.name}</p>
-                        <p><strong>Email:</strong> {submission.email}</p>
-                        <p><strong>Message:</strong> {submission.message}</p>
-                        <p><strong>Submitted:</strong> {new Date(submission.submittedAt).toLocaleString()}</p>
-                      </div>
-                      <select
-                        value={submission.status}
-                        onChange={(e) => handleStatusChange(submission._id, e.target.value)}
-                        style={{ padding: '0.3rem', borderRadius: '5px', border: '1px solid var(--light-gray)' }}
-                      >
-                        <option value="Not Read">Not Read</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Confirmed">Confirmed</option>
-                      </select>
+                  <div
+                    key={submission._id}
+                    className="dash-submission-card"
+                    style={{
+                      borderLeft: `4px solid ${
+                        submission.status === 'Not Read'
+                          ? 'var(--dash-primary)'
+                          : submission.status === 'Pending'
+                          ? 'var(--dash-warning)'
+                          : 'var(--dash-success)'
+                      }`,
+                    }}
+                  >
+                    <div className="dash-submission-content">
+                      <p><strong>Name:</strong> {submission.name}</p>
+                      <p><strong>Email:</strong> {submission.email}</p>
+                      <p><strong>Message:</strong> {submission.message}</p>
+                      <p><strong>Submitted:</strong> {new Date(submission.submittedAt).toLocaleString()}</p>
                     </div>
-                  </li>
+                    <select
+                      value={submission.status}
+                      onChange={(e) => handleStatusChange(submission._id, e.target.value)}
+                      className="dash-status-select"
+                    >
+                      <option value="Not Read">Not Read</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Confirmed">Confirmed</option>
+                    </select>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
-          </div>
-        )}
-        <button
-          className="btn btn-primary"
-          style={{ marginTop: '2rem' }}
-          onClick={() => { localStorage.removeItem('adminToken'); navigate('/'); }}
-        >
-          Logout
-        </button>
+          )}
+        </div>
       </div>
     </div>
   );
