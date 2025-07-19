@@ -92,20 +92,15 @@ const Dashboard = () => {
   return (
     <div className="dash-page">
       <div className="dash-sidebar">
-        <div className="dash-sidebar-brand">
-          <h3>Kyushu Edu Admin</h3>
-        </div>
         <ul className="dash-sidebar-nav">
           <li>
             <Link to="/admin/dashboard" className="dash-sidebar-link dash-active">
               <FaTachometerAlt />
-              <span>Dashboard</span>
             </Link>
           </li>
           <li>
             <Link to="/admin/submissions" className="dash-sidebar-link">
               <FaEnvelope />
-              <span>Submissions</span>
             </Link>
           </li>
           <li>
@@ -117,7 +112,6 @@ const Dashboard = () => {
               }}
             >
               <FaSignOutAlt />
-              <span>Logout</span>
             </button>
           </li>
         </ul>
@@ -125,7 +119,7 @@ const Dashboard = () => {
 
       <div className="dash-main">
         <div className="dash-container">
-          <h1 className="dash-title">Admin Dashboard</h1>
+          <h1 className="dash-title">Dashboard</h1>
           {message && <p className="dash-message">{message}</p>}
 
           {data && (
@@ -133,7 +127,7 @@ const Dashboard = () => {
               <div className="dash-stat-card">
                 <FaTachometerAlt className="dash-stat-icon" />
                 <div className="dash-stat-content">
-                  <h3>Website Visits</h3>
+                  <h3>Visits</h3>
                   <p className="dash-stat-number">{visitCount}</p>
                 </div>
               </div>
@@ -142,7 +136,7 @@ const Dashboard = () => {
 
           {submissions.length > 0 && (
             <div className="dash-submissions">
-              <h2 className="dash-section-title">Recent Contact Submissions</h2>
+              <h2 className="dash-section-title">Submissions</h2>
               <div className="dash-filters">
                 <div className="dash-filter-group">
                   <FaFilter className="dash-filter-icon" />
@@ -151,7 +145,7 @@ const Dashboard = () => {
                     onChange={(e) => setFilterStatus(e.target.value)}
                     className="dash-filter-select"
                   >
-                    <option value="All">All Statuses</option>
+                    <option value="All">All</option>
                     <option value="Not Read">Not Read</option>
                     <option value="Pending">Pending</option>
                     <option value="Confirmed">Confirmed</option>
@@ -172,7 +166,7 @@ const Dashboard = () => {
                   <FaSearch className="dash-filter-icon" />
                   <input
                     type="text"
-                    placeholder="Search by Name"
+                    placeholder="Name"
                     value={searchName}
                     onChange={(e) => setSearchName(e.target.value)}
                     className="dash-filter-input"
@@ -182,7 +176,7 @@ const Dashboard = () => {
                   <FaSearch className="dash-filter-icon" />
                   <input
                     type="text"
-                    placeholder="Search by Email"
+                    placeholder="Email"
                     value={searchEmail}
                     onChange={(e) => setSearchEmail(e.target.value)}
                     className="dash-filter-input"
@@ -205,12 +199,12 @@ const Dashboard = () => {
                     key={submission._id}
                     className="dash-submission-card"
                     style={{
-                      borderLeft: `4px solid ${
+                      borderLeft: `3px solid ${
                         submission.status === 'Not Read'
-                          ? 'var(--dash-primary)'
+                          ? '#2563eb'
                           : submission.status === 'Pending'
-                          ? 'var(--dash-warning)'
-                          : 'var(--dash-success)'
+                          ? '#f59e0b'
+                          : '#16a34a'
                       }`,
                     }}
                   >
@@ -218,7 +212,7 @@ const Dashboard = () => {
                       <p><strong>Name:</strong> {submission.name}</p>
                       <p><strong>Email:</strong> {submission.email}</p>
                       <p><strong>Message:</strong> {submission.message}</p>
-                      <p><strong>Submitted:</strong> {new Date(submission.submittedAt).toLocaleString()}</p>
+                      <p><strong>Date:</strong> {new Date(submission.submittedAt).toLocaleString()}</p>
                     </div>
                     <select
                       value={submission.status}
